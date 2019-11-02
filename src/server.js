@@ -137,10 +137,6 @@ const bodyParser = require('body-parser');
       await orderUpdated.save();
 
       orders.indexOf(order) = orderUpdated;
-      /*orders = orders.map((order) =>
-        order.id === orderUpdated.id
-          ? { ...order, status: orderUpdated.status }
-          : order*/
 
       io.sockets.emit('ordersUpdate', orders);
 

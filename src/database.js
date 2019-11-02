@@ -10,15 +10,16 @@ module.exports = async () => {
     {
       host: process.env.DB_HOST,
       dialect: process.env.DB_DIALECT,
-      logging: (sql) => console.log(sql)
-    }
+      logging: (sql) => console.log(sql),
+    },
   );
 
   process.on('SIGINT', async () => {
     try {
       await sequelize.close();
       process.exit(0);
-    } catch (err) {
+    }
+    catch (err) {
       process.exit(1);
     }
   });
