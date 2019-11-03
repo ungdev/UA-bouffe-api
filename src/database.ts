@@ -10,7 +10,7 @@ export default async () => {
     {
       host: process.env.DB_HOST,
       dialect: (process.env.DB_DIALECT as Options['dialect']),
-      logging: (sql: any) => console.log(sql),
+      logging: (sql: string) => console.log(sql),
     },
   );
 

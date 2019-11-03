@@ -33,6 +33,7 @@
       "warn",
       "stroustrup"
     ],
-    "import/default": "off"
+    "import/default": "off",
+    "max-len": "off"
   }
 }
