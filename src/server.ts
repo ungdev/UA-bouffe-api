@@ -32,14 +32,6 @@ config();
 
   const { Order, OrderItem } = models;
 
-  const orders = await Order.findAll({
-    attributes: ['id', 'status', 'method'],
-    include: {
-      model: OrderItem,
-      attributes: ['id', 'key', 'price', 'category'],
-    },
-  });
-
   server.listen(process.env.APP_PORT, () => {
     console.log('Listening on 3001...');
   });
@@ -51,15 +43,6 @@ config();
       .json({ error: 'UNKNOWN' })
       .end();
   };
-
-  /**
-   * Login
-   */
-
-  /* app.post('/login', [
-    check('pin')
-      .isLength(6)
-  ]) */
 
   const generateToken = () => jwt.sign(
     { turbobouffe: 'ARENA4EVER' },
@@ -90,6 +73,69 @@ config();
     }
   });
 
+  const getOrders = () => Order.findAll({
+    attributes: ['id', 'status', 'method'],
+    include: {
+      model: OrderItem,
+      attributes: ['id', 'key', 'price', 'category'],
+    },
+  });
+
+  const notifyOrdersUpdated = async () => {
+    const orders = await getOrders();
+    io.sockets.emit('ordersUpdate', orders);
+  };
+
+  app.get('/orders', async (req: Request, res: Response) => {
+    try {
+      // todo: filtrer ça
+      const orders = await getOrders();
+
+      return res
+        .status(200)
+        .json(orders)
+        .end();
+    }
+
+    catch (err) {
+      errorHandler(err, res);
+    }
+  });
+
+  app.post('/orders', async (req: Request, res: Response) => {
+
+    try {
+      const { method, items } = req.body;
+
+      if (items.length === 0) {
+        return res
+          .status(400)
+          .json({ error: 'BASKET_EMPTY' })
+          .end();
+      }
+
+      await Order.create(
+        {
+          method,
+          orderItems: items,
+        },
+        {
+          include: [OrderItem],
+        },
+      );
+
+      notifyOrdersUpdated();
+
+      return res
+        .status(204)
+        .end();
+    }
+
+    catch (err) {
+      errorHandler(err, res);
+    }
+  });
+
   app.post('/refreshToken', (req: Request, res: Response) => {
     try {
       const { token } = req.body;
@@ -112,25 +158,8 @@ config();
   io.on('connection', (socket: any) => {
     console.log('A user has connected');
 
-    socket.on('addOrder', async (order: any) => {
-      console.log('New Order !');
 
-      const newOrder = await Order.create(
-        {
-          method: order.method,
-          orderItems: order.items,
-        },
-        {
-          include: [OrderItem],
-        },
-      );
-
-      orders.push(newOrder);
-
-      io.sockets.emit('ordersUpdate', orders);
-    });
-
-    socket.on('setOrderStatus', async (order: any) => {
+    /* socket.on('setOrderStatus', async (order: any) => {
       try {
         console.log(`Order ${order.id} upgrade`);
 
@@ -146,11 +175,7 @@ config();
       catch (err) {
         console.error(err);
       }
-    });
-
-    socket.on('refreshOrders', () => {
-      io.sockets.emit('ordersUpdate', orders);
-    });
+    }); */
 
     socket.on('disconnect', () => {
       console.log('A user has disconnected !');

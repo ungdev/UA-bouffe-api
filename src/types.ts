@@ -1,5 +1,4 @@
 
-
 export interface Order {
   id: number;
   method: PaymentMethod;
