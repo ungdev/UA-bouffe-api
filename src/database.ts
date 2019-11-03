@@ -1,16 +1,16 @@
-const { Sequelize } = require('sequelize');
-const models = require('./models');
-require('dotenv').config();
+import { Sequelize, Options } from 'sequelize';
+import models from './models';
 
-module.exports = async () => {
+
+export default async () => {
   const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USERNAME,
     process.env.DB_PASSWORD,
     {
       host: process.env.DB_HOST,
-      dialect: process.env.DB_DIALECT,
-      logging: (sql) => console.log(sql),
+      dialect: (process.env.DB_DIALECT as Options['dialect']),
+      logging: (sql: any) => console.log(sql),
     },
   );
 
@@ -25,7 +25,7 @@ module.exports = async () => {
   });
 
   const modelsCreated = models(sequelize);
-  await sequelize.sync(); // TODO: UNIQUEMENT POUR LE DEV !!!
+  await sequelize.sync();
   console.log('Connected to database');
 
   return { sequelize, models: modelsCreated };

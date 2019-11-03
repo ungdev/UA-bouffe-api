@@ -1,17 +1,22 @@
-require('dotenv').config();
-const express = require('express');
-const jwt = require('jsonwebtoken');
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import http from 'http';
+import socketio from 'socket.io';
+
+import { config } from 'dotenv';
+
+import morgan from 'morgan';
+import cors from 'cors';
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
+import database from './database';
+
 
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-const database = require('./database');
-const sequelize = require('sequelize');
+const server = http.createServer(app);
+const io = socketio(server);
 
-const morgan = require('morgan');
-const cors = require('cors');
-const helmet = require('helmet');
-const bodyParser = require('body-parser');
+config();
 
 (async () => {
   app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
@@ -19,10 +24,9 @@ const bodyParser = require('body-parser');
   app.use(helmet());
   app.use(bodyParser.json());
 
-  if (process.env.NODE_ENV === 'development')
-    app.use(bodyParser.urlencoded({ extended: true }));
+  if (process.env.NODE_ENV === 'development') app.use(bodyParser.urlencoded({ extended: true }));
 
-  const { sequelize, models } = await database();
+  const { models } = await database();
 
   app.locals.models = models;
 
@@ -32,15 +36,15 @@ const bodyParser = require('body-parser');
     attributes: ['id', 'status', 'method'],
     include: {
       model: OrderItem,
-      attributes: ['id', 'key', 'price', 'category']
-    }
+      attributes: ['id', 'key', 'price', 'category'],
+    },
   });
 
-  http.listen(process.env.APP_PORT, () => {
+  server.listen(process.env.APP_PORT, () => {
     console.log('Listening on 3001...');
   });
 
-  const errorHandler = (err, res) => {
+  const errorHandler = (err: any, res: Response) => {
     console.error(err);
     return res
       .status(500)
@@ -52,26 +56,24 @@ const bodyParser = require('body-parser');
    * Login
    */
 
-  /*app.post('/login', [
+  /* app.post('/login', [
     check('pin')
       .isLength(6)
-  ])*/
+  ]) */
 
-  const generateToken = () => {
-    return jwt.sign(
-      { turbobouffe: 'ARENA4EVER' },
-      process.env.APP_TOKEN_SECRET,
-      {
-        expiresIn: process.env.APP_TOKEN_EXPIRES
-      }
-    );
-  };
+  const generateToken = () => jwt.sign(
+    { turbobouffe: 'ARENA4EVER' },
+    process.env.APP_TOKEN_SECRET,
+    {
+      expiresIn: process.env.APP_TOKEN_EXPIRES,
+    },
+  );
 
-  app.post('/login', (req, res) => {
+  app.post('/login', (req: Request, res: Response) => {
     try {
-      const pin = req.body.pin;
+      const { pin } = req.body;
 
-      if (pin != process.env.APP_PIN) {
+      if (pin !== process.env.APP_PIN) {
         return res
           .status(400)
           .json({ error: 'INVALID_PIN' })
@@ -82,14 +84,15 @@ const bodyParser = require('body-parser');
         .status(200)
         .json({ token: generateToken() })
         .end();
-    } catch (err) {
+    }
+    catch (err) {
       return errorHandler(err, res);
     }
   });
 
-  app.post('/refreshToken', (req, res) => {
+  app.post('/refreshToken', (req: Request, res: Response) => {
     try {
-      const token = req.body.token;
+      const { token } = req.body;
 
       jwt.verify(token, process.env.APP_TOKEN_SECRET);
 
@@ -97,7 +100,8 @@ const bodyParser = require('body-parser');
         .status(200)
         .json({ token: generateToken() })
         .end();
-    } catch (err) {
+    }
+    catch (err) {
       return res
         .status(400)
         .json({ error: 'INVALID_TOKEN' })
@@ -105,20 +109,20 @@ const bodyParser = require('body-parser');
     }
   });
 
-  io.on('connection', (socket) => {
+  io.on('connection', (socket: any) => {
     console.log('A user has connected');
 
-    socket.on('addOrder', async (order) => {
+    socket.on('addOrder', async (order: any) => {
       console.log('New Order !');
 
       const newOrder = await Order.create(
         {
           method: order.method,
-          orderItems: order.items
+          orderItems: order.items,
         },
         {
-          include: [OrderItem]
-        }
+          include: [OrderItem],
+        },
       );
 
       orders.push(newOrder);
@@ -126,22 +130,20 @@ const bodyParser = require('body-parser');
       io.sockets.emit('ordersUpdate', orders);
     });
 
-    socket.on('setOrderStatus', async (order) => {
-
+    socket.on('setOrderStatus', async (order: any) => {
       try {
-      console.log(`Order ${order.id} upgrade`);
+        console.log(`Order ${order.id} upgrade`);
 
-      const orderUpdated = await Order.findByPk(order.id);
-      orderUpdated.status = order.status;
+        const orderUpdated = await Order.findByPk(order.id);
+        orderUpdated.status = order.status;
 
-      await orderUpdated.save();
+        await orderUpdated.save();
 
-      orders.indexOf(order) = orderUpdated;
+        orders.indexOf(order) = orderUpdated;
 
-      io.sockets.emit('ordersUpdate', orders);
-
+        io.sockets.emit('ordersUpdate', orders);
       }
-      catch(err) {
+      catch (err) {
         console.error(err);
       }
     });

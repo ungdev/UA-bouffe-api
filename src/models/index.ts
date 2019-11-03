@@ -1,4 +1,4 @@
-module.exports = (sequelize) => {
+export default (sequelize: any) => {
   const Order = sequelize.import(`${__dirname}/order`);
   const OrderItem = sequelize.import(`${__dirname}/orderItem`);
 

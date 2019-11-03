@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('order', {
+export default (sequelize: any, DataTypes: any) => sequelize.define('order', {
   status: {
     type: DataTypes.ENUM('pending', 'preparing', 'ready', 'finished'),
     allowNull: false,
