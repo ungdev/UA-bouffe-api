@@ -6,13 +6,9 @@ ajouter codes d'erreur
 
 SEPARERE
 
-express helmet ??? + express validator
+todo: les get orders
 
 Mettre des logs...
-
-Mettre eslint
-Mettre typescript
-Mettre prettier
 
 Passer authentication en BODY !!!!!
 

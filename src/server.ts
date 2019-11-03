@@ -88,7 +88,6 @@ config();
 
   app.get('/orders', async (req: Request, res: Response) => {
     try {
-      // todo: filtrer ça
       const orders = await getOrders();
 
       return res
@@ -136,6 +135,33 @@ config();
     }
   });
 
+  app.patch('/orders/:id', async (req: Request, res: Response) => {
+
+    // todo: mettre de la validation
+    const { status } = req.body;
+
+    try {
+
+      await Order.update({
+        status
+      }, {
+        where: {
+          id: req.params.id
+        }
+      })
+
+      notifyOrdersUpdated();
+
+      return res
+        .status(204)
+        .end();
+    }
+
+    catch (err) {
+      errorHandler(err, res);
+    }
+  })
+
   app.post('/refreshToken', (req: Request, res: Response) => {
     try {
       const { token } = req.body;
@@ -155,30 +181,11 @@ config();
     }
   });
 
-  io.on('connection', (socket: any) => {
-    console.log('A user has connected');
-
-
-    /* socket.on('setOrderStatus', async (order: any) => {
-      try {
-        console.log(`Order ${order.id} upgrade`);
-
-        const orderUpdated = await Order.findByPk(order.id);
-        orderUpdated.status = order.status;
-
-        await orderUpdated.save();
-
-        orders.indexOf(order) = orderUpdated;
-
-        io.sockets.emit('ordersUpdate', orders);
-      }
-      catch (err) {
-        console.error(err);
-      }
-    }); */
-
-    socket.on('disconnect', () => {
-      console.log('A user has disconnected !');
-    });
+  app.use((req: Request, res: Response) => {
+    return res
+      .status(404)
+      .json({ error: 'NOT_FOUND' })
+      .end();
   });
+
 })();
