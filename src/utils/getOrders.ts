@@ -1,8 +1,7 @@
-import { OrderModel, OrderItemModel } from "../types";
-import { IncludeOptions } from "sequelize/types";
+import { IncludeOptions } from 'sequelize/types';
+import { OrderModel, OrderItemModel } from '../types';
 
 const getOrders = (Order: OrderModel, OrderItem: OrderItemModel) => {
-
   const includeOrderItems: IncludeOptions = {
     model: OrderItem,
     attributes: ['id', 'key', 'price', 'category'],
@@ -10,7 +9,7 @@ const getOrders = (Order: OrderModel, OrderItem: OrderItemModel) => {
 
   return Order.findAll({
     attributes: ['id', 'status', 'method'],
-    include: [includeOrderItems]
+    include: [includeOrderItems],
   });
 };
 

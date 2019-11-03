@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import errorHandler from "../../utils/errorHandler";
-import generateToken from "../../utils/generateToken";
+import { Request, Response } from 'express';
+import errorHandler from '../../utils/errorHandler';
+import generateToken from '../../utils/generateToken';
 
 export default () => (req: Request, res: Response) => {
   try {
@@ -21,4 +21,4 @@ export default () => (req: Request, res: Response) => {
   catch (err) {
     return errorHandler(err, res);
   }
-}
+};

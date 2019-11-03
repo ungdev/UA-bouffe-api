@@ -1,7 +1,7 @@
-import { OrderModel, OrderItemModel } from "../../types";
-import { Request, Response } from "express";
-import notifyOrdersUpdated from "../../utils/notifyOrdersUpdated";
-import errorHandler from "../../utils/errorHandler";
+import { Request, Response } from 'express';
+import { OrderModel, OrderItemModel } from '../../types';
+import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
+import errorHandler from '../../utils/errorHandler';
 
 const upgradeStatus = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Request, res: Response) => {
   // todo: mettre de la validation
@@ -26,6 +26,6 @@ const upgradeStatus = (Order: OrderModel, OrderItem: OrderItemModel) => async (r
   catch (err) {
     errorHandler(err, res);
   }
-}
+};
 
 export default upgradeStatus;

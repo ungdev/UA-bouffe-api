@@ -1,6 +1,6 @@
-import { Router } from "express";
-import login from "./login";
-import refreshToken from "./refreshToken";
+import { Router } from 'express';
+import login from './login';
+import refreshToken from './refreshToken';
 
 export default () => {
   const router = Router();
@@ -9,4 +9,4 @@ export default () => {
   router.post('/refreshToken', refreshToken());
 
   return router;
-}
+};

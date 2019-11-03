@@ -1,7 +1,7 @@
-import { OrderModel, OrderItemModel } from "../../types";
-import { Request, Response } from "express";
-import errorHandler from "../../utils/errorHandler";
-import notifyOrdersUpdated from "../../utils/notifyOrdersUpdated";
+import { Request, Response } from 'express';
+import { OrderModel, OrderItemModel } from '../../types';
+import errorHandler from '../../utils/errorHandler';
+import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
 
 const create = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Request, res: Response) => {
   try {
@@ -34,6 +34,6 @@ const create = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Req
   catch (err) {
     errorHandler(err, res);
   }
-}
+};
 
 export default create;

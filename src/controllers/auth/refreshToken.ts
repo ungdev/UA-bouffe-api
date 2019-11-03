@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import generateToken from '../../utils/generateToken';
 import { Request, Response } from 'express';
+import generateToken from '../../utils/generateToken';
 
 export default () => (req: Request, res: Response) => {
   try {

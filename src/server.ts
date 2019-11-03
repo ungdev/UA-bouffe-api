@@ -33,10 +33,10 @@ config();
 
   if (process.env.NODE_ENV === 'development') app.use(bodyParser.urlencoded({ extended: true })); // For postman
 
-  app.use(routes);
+  app.use(routes(models));
   app.use(notFound);
 
   server.listen(process.env.APP_PORT, () => {
-    console.log('Listening on 3001...');
+    console.log(`Listening on ${process.env.APP_PORT}...`);
   });
 })();
