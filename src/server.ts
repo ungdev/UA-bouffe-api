@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 import database from './database';
 import { notFound } from './utils/errorHandler';
 import routes from './controllers';
-
+import restricLocalIP from './middlewares/restricLocalIP';
 
 const app = express();
 const server = http.createServer(app);
@@ -33,6 +33,7 @@ config();
 
   if (process.env.NODE_ENV === 'development') app.use(bodyParser.urlencoded({ extended: true })); // For postman
 
+  app.use(restricLocalIP);
   app.use(routes(models));
   app.use(notFound);
 

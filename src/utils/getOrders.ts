@@ -8,7 +8,7 @@ const getOrders = (Order: OrderModel, OrderItem: OrderItemModel) => {
   };
 
   return Order.findAll({
-    attributes: ['id', 'status', 'method'],
+    attributes: ['id', 'place', 'status', 'method'],
     include: [includeOrderItems],
   });
 };

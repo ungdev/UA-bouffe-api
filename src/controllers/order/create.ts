@@ -5,7 +5,7 @@ import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
 
 const create = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Request, res: Response) => {
   try {
-    const { method, items } = req.body;
+    const { method, items, place } = req.body;
 
     if (items.length === 0) {
       return res
@@ -17,6 +17,7 @@ const create = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Req
     await Order.create(
       {
         method,
+        place,
         orderItems: items,
       },
       {
@@ -26,12 +27,9 @@ const create = (Order: OrderModel, OrderItem: OrderItemModel) => async (req: Req
 
     notifyOrdersUpdated(Order, OrderItem, req.app.locals.io);
 
-    return res
-      .status(204)
-      .end();
+    return res.status(204).end();
   }
-
-  catch (err) {
+ catch (err) {
     errorHandler(err, res);
   }
 };

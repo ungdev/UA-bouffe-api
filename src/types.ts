@@ -17,11 +17,12 @@ export enum Status {
   PENDING = 'pending',
   PREPARING = 'preparing',
   READY = 'ready',
-  FINISHED = 'finished',
+  FINISHED = 'finished'
 }
 
 export interface Order {
   readonly id: number;
+  place: string;
   method: PaymentMethod;
   status: Status;
   orderItems: Array<Item>;
@@ -29,23 +30,23 @@ export interface Order {
 
 export enum PaymentMethod {
   Card = 'card',
-  Cash = 'cash',
+  Cash = 'cash'
 }
 
 // Sequelize
 export interface DefaultStatic extends SequelizeModel {
   readonly id: number;
 }
-interface OrderStatic extends DefaultStatic, Order { }
-interface OrderItemStatic extends DefaultStatic, Item { }
+interface OrderStatic extends DefaultStatic, Order {}
+interface OrderItemStatic extends DefaultStatic, Item {}
 
 export type OrderModel = typeof SequelizeModel & {
-  new(values?: object, options?: BuildOptions): OrderStatic;
-}
+  new (values?: object, options?: BuildOptions): OrderStatic;
+};
 
 export type OrderItemModel = typeof SequelizeModel & {
-  new(values?: object, options?: BuildOptions): OrderItemStatic;
-}
+  new (values?: object, options?: BuildOptions): OrderItemStatic;
+};
 
 export interface Models {
   Order: OrderModel;

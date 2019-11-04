@@ -3,6 +3,7 @@ import { OrderModel, OrderItemModel } from '../types';
 
 export default (sequelize: Sequelize) => {
   const Order = sequelize.define('order', {
+    place: { type: DataTypes.STRING, allowNull: false },
     status: {
       type: DataTypes.ENUM('pending', 'preparing', 'ready', 'finished'),
       allowNull: false,
