@@ -4,7 +4,7 @@ import { OrderModel, OrderItemModel } from '../types';
 const getOrders = (Order: OrderModel, OrderItem: OrderItemModel) => {
   const includeOrderItems: IncludeOptions = {
     model: OrderItem,
-    attributes: ['id', 'key', 'price', 'category'],
+    attributes: ['id', 'name', 'key', 'price', 'category'],
   };
 
   return Order.findAll({
