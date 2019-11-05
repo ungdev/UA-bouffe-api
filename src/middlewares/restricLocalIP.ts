@@ -11,7 +11,7 @@ const isPrivate = (ip: string) => {
   );
 };
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export default () => (req: Request, res: Response, next: NextFunction) => {
   const ip = (req.header('x-forwarded-for') || req.connection.remoteAddress).split(':');
   const ipv4 = ip[ip.length - 1];
 

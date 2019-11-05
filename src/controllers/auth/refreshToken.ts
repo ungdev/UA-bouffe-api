@@ -13,7 +13,7 @@ export default () => (req: Request, res: Response) => {
       .json({ token: generateToken() })
       .end();
   }
-  catch (err) {
+ catch (err) {
     return res
       .status(400)
       .json({ error: 'INVALID_TOKEN' })

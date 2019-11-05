@@ -10,9 +10,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -21,18 +19,12 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "eol-last": "off",
-    "linebreak-style": [
-      "warn",
-      "windows"
-    ],
+    "linebreak-style": ["warn", "windows"],
     "no-console": "error",
     "no-alert": "error",
     "object-curly-newline": "off",
     "no-param-reassign": "off",
-    "brace-style": [
-      "warn",
-      "stroustrup"
-    ],
+    "brace-style": ["warn", "stroustrup"],
     "import/default": "off",
     "max-len": "off"
   }

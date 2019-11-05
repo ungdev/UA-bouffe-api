@@ -8,10 +8,10 @@ const errorHandler = (err: any, res: Response) => {
     .end();
 };
 
-const notFound = (req: Request, res: Response) => res
-  .status(404)
-  .json({ error: 'NOT_FOUND' })
-  .end();
+const notFound = () => (req: Request, res: Response) => res
+    .status(404)
+    .json({ error: 'NOT_FOUND' })
+    .end();
 
 export default errorHandler;
 export { notFound };
