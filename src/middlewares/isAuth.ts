@@ -16,8 +16,7 @@ export default () => (req: Request, res: Response, next: NextFunction) => {
   try {
     jwt.verify(token, process.env.APP_TOKEN_SECRET);
     return next();
-  }
- catch (err) {
+  } catch (err) {
     return res
       .status(400)
       .json({ error: 'INVALID_TOKEN' })
