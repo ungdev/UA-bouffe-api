@@ -32,7 +32,6 @@ export enum PaymentMethod {
   Card = 'card',
   Cash = 'cash'
 }
-
 // Sequelize
 export interface DefaultStatic extends SequelizeModel {
   readonly id: number;

@@ -30,15 +30,16 @@
     "@types/validator": "^10.11.3",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",
-    "concurrently": "^5.0.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^1.19.4",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.6.4"
   },
   "scripts": {
-    "dev": "concurrently -k -i --default-input-target 1 -n \"TypeScript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon --watch build build/server.js\"",
+    "build": "tsc",
+    "start": "node build/server.js",
+    "dev": "ts-node-dev --no-notify src/server.ts",
     "lint": "eslint src/ --ext .ts",
     "lint-fix": "eslint --fix src/ --ext .ts"
   }
