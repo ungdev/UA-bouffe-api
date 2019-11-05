@@ -1,23 +1,10 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { OrderModel, OrderItemModel } from '../types';
+import OrderDef from './order';
+import OrderItemDef from './orderItem';
 
 export default (sequelize: Sequelize) => {
-  const Order = sequelize.define('order', {
-    place: { type: DataTypes.STRING, allowNull: false },
-    status: {
-      type: DataTypes.ENUM('pending', 'preparing', 'ready', 'finished'),
-      allowNull: false,
-      defaultValue: 'pending',
-    },
-    method: { type: DataTypes.ENUM('cash', 'card'), allowNull: false },
-  }) as OrderModel;
-
-  const OrderItem = sequelize.define('orderItem', {
-    key: { type: DataTypes.STRING, allowNull: false },
-    name: { type: DataTypes.STRING, allowNull: false },
-    price: { type: DataTypes.INTEGER, allowNull: false },
-    category: { type: DataTypes.STRING, allowNull: false },
-  }) as OrderItemModel;
+  const Order = OrderDef(sequelize);
+  const OrderItem = OrderItemDef(sequelize);
 
   Order.hasMany(OrderItem);
   OrderItem.belongsTo(Order);

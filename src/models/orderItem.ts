@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize/types';
+import { Sequelize, DataTypes } from 'sequelize';
 import { OrderItemModel } from '../types';
 
 export default (sequelize: Sequelize) => sequelize.define('orderItem', {
