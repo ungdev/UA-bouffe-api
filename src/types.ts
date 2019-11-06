@@ -10,14 +10,13 @@ export interface Item {
 
 export interface Category {
   name: string;
-  items: Array<Item>;
 }
 
 export enum Status {
   PENDING = 'pending',
   PREPARING = 'preparing',
   READY = 'ready',
-  FINISHED = 'finished'
+  FINISHED = 'finished',
 }
 
 export interface Order {
@@ -30,21 +29,31 @@ export interface Order {
 
 export enum PaymentMethod {
   Card = 'card',
-  Cash = 'cash'
+  Cash = 'cash',
 }
 // Sequelize
 export interface DefaultStatic extends SequelizeModel {
   readonly id: number;
 }
-interface OrderStatic extends DefaultStatic, Order {}
-interface OrderItemStatic extends DefaultStatic, Item {}
 
+interface OrderStatic extends DefaultStatic, Order {}
 export type OrderModel = typeof SequelizeModel & {
   new (values?: object, options?: BuildOptions): OrderStatic;
 };
 
+interface OrderItemStatic extends DefaultStatic, Item {}
 export type OrderItemModel = typeof SequelizeModel & {
   new (values?: object, options?: BuildOptions): OrderItemStatic;
+};
+
+interface ItemStatic extends DefaultStatic, Item {}
+export type ItemModel = typeof SequelizeModel & {
+  new (values?: object, options?: BuildOptions): ItemStatic;
+};
+
+interface CategoryStatic extends DefaultStatic, Category {}
+export type CategoryModel = typeof SequelizeModel & {
+  new (values?: object, options?: BuildOptions): CategoryStatic;
 };
 
 export interface Models {
