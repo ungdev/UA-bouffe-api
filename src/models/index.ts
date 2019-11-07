@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import OrderDef from './order';
 import OrderItemDef from './orderItem';
 import CategoryDef from './category';

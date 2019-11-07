@@ -7,7 +7,7 @@ const getCurrentOrders = (Order: OrderModel, OrderItem: OrderItemModel, Item: It
     include: [
       {
         model: OrderItem,
-        attributes: ['price'],
+        attributes: [],
         include: [
           {
             model: Item,

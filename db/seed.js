@@ -37,6 +37,8 @@ const seed = (file) =>
 (async () => {
   await seed('categories.sql');
   await seed('items.sql');
+  await seed('orders.sql');
+  await seed('orderItems.sql');
 
   connection.end();
 })();

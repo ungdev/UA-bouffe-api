@@ -1,11 +1,12 @@
 import { Sequelize } from 'sequelize';
 import models from './models';
+import log from './utils/log';
 
 export default async () => {
   const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    logging: (sql: string) => console.log(sql),
+    logging: (sql: string) => log.info(sql),
   });
 
   process.on('SIGINT', async () => {
@@ -19,7 +20,7 @@ export default async () => {
 
   const modelsCreated = models(sequelize);
   await sequelize.sync();
-  console.log('Connected to database');
+  log.info('Connected to database');
 
   return { sequelize, models: modelsCreated };
 };

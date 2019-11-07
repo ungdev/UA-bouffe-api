@@ -1,5 +1,4 @@
-import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
 
@@ -13,6 +12,7 @@ import database from './database';
 import { notFound } from './utils/errorHandler';
 import routes from './controllers';
 import restricLocalIP from './middlewares/restricLocalIP';
+import log from './utils/log';
 
 const app = express();
 const server = http.createServer(app);
@@ -38,6 +38,6 @@ config();
   app.use(notFound());
 
   server.listen(process.env.APP_PORT, () => {
-    console.log(`Listening on ${process.env.APP_PORT}...`);
+    log.info(`Listening on ${process.env.APP_PORT}...`);
   });
 })();
