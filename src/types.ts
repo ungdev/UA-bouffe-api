@@ -1,22 +1,25 @@
 import { Model as SequelizeModel, BuildOptions } from 'sequelize/types';
 
+/**
+ * DISCLAMER: Dans mode développement, la modification de ce fichier ne sera peut-être pas prise en compte par le serveur de dev
+ * Redémarrer le serveur dans ce cas là
+ */
 // General
 export interface Item {
-  key: string;
+  readonly id: number;
   name: string;
+  key: string;
+  promoKey: string;
   price: number;
-  category: string;
+  orgaPrice: number;
+  available: boolean;
 }
 
 export interface Category {
+  readonly id: number;
   name: string;
-}
-
-export enum Status {
-  PENDING = 'pending',
-  PREPARING = 'preparing',
-  READY = 'ready',
-  FINISHED = 'finished',
+  key: string;
+  needsPreparation: boolean;
 }
 
 export interface Order {
@@ -25,6 +28,18 @@ export interface Order {
   method: PaymentMethod;
   status: Status;
   orderItems: Array<Item>;
+}
+
+export interface OrderItem {
+  readonly id: number;
+  price: number;
+}
+
+export enum Status {
+  PENDING = 'pending',
+  PREPARING = 'preparing',
+  READY = 'ready',
+  FINISHED = 'finished',
 }
 
 export enum PaymentMethod {
@@ -59,4 +74,6 @@ export type CategoryModel = typeof SequelizeModel & {
 export interface Models {
   Order: OrderModel;
   OrderItem: OrderItemModel;
+  Item: ItemModel;
+  Category: CategoryModel;
 }

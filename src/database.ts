@@ -1,4 +1,4 @@
-import { Sequelize, Options } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import models from './models';
 
 export default async () => {
@@ -18,7 +18,7 @@ export default async () => {
   });
 
   const modelsCreated = models(sequelize);
-  await sequelize.sync({ force: true });
+  await sequelize.sync();
   console.log('Connected to database');
 
   return { sequelize, models: modelsCreated };

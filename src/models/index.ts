@@ -3,8 +3,9 @@ import OrderDef from './order';
 import OrderItemDef from './orderItem';
 import CategoryDef from './category';
 import ItemDef from './item';
+import { Models } from '../types';
 
-export default (sequelize: Sequelize) => {
+export default (sequelize: Sequelize): Models => {
   const Order = OrderDef(sequelize);
   const OrderItem = OrderItemDef(sequelize);
   const Item = ItemDef(sequelize);
@@ -19,11 +20,11 @@ export default (sequelize: Sequelize) => {
     onDelete: 'cascade',
   });
 
-  Item.hasMany(Order, {
+  Item.hasMany(OrderItem, {
     foreignKey: { allowNull: false },
     onDelete: 'cascade',
   });
-  Order.belongsTo(Item, {
+  OrderItem.belongsTo(Item, {
     foreignKey: { allowNull: false },
     onDelete: 'cascade',
   });
@@ -37,5 +38,5 @@ export default (sequelize: Sequelize) => {
     onDelete: 'cascade',
   });
 
-  return { Order, OrderItem, Item, Category };
+  return { Order, OrderItem, Category, Item };
 };

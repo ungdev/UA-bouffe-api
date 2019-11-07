@@ -1,4 +1,4 @@
-INSERT INTO uabouffe.items (id, name, `key`, promoKey, price, orgaPrice, available, createdAt, updatedAt, categoryId) VALUES (1, 'Coca-Cola', 'cocacola', '', 100, 60, 1, '2019-11-05 23:34:28', '2019-11-05 23:34:28', 1);
+INSERT INTO uabouffe.items (id, name, `key`, promoKey, price, orgaPrice, available, createdAt, updatedAt, categoryId) VALUES (1, 'Coca-Cola', 'cocacola', null, 100, 60, 1, '2019-11-05 23:34:28', '2019-11-05 23:34:28', 1);
 INSERT INTO uabouffe.items (id, name, `key`, promoKey, price, orgaPrice, available, createdAt, updatedAt, categoryId) VALUES (2, 'Sprite', 'sprite', null, 100, 60, 1, '2019-11-05 23:34:28', '2019-11-05 23:34:28', 1);
 INSERT INTO uabouffe.items (id, name, `key`, promoKey, price, orgaPrice, available, createdAt, updatedAt, categoryId) VALUES (3, 'Coca Cherry', 'cocacherry', null, 100, 60, 1, '2019-11-05 23:34:28', '2019-11-05 23:34:28', 1);
 INSERT INTO uabouffe.items (id, name, `key`, promoKey, price, orgaPrice, available, createdAt, updatedAt, categoryId) VALUES (4, 'Coca Zéro', 'cocazero', null, 100, 60, 1, '2019-11-05 23:34:28', '2019-11-05 23:34:28', 1);
