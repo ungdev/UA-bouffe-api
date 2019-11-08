@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { Op } from 'sequelize';
 import errorHandler from '../../utils/errorHandler';
-import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
+import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import Order from '../../models/order';
 import OrderItem from '../../models/orderItem';
 import { BodyRequest, PaymentMethod } from '../../types';
@@ -52,7 +52,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
     notifyOrdersUpdated(req.app.locals.io);
 
-    return res.status(204).end();
+    return res.status(201).end();
   } catch (err) {
     return errorHandler(err, res);
   }

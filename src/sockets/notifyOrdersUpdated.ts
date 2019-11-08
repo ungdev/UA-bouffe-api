@@ -1,4 +1,4 @@
-import getCurrentOrders from './orders';
+import getCurrentOrders from '../utils/orders';
 
 const notifyOrdersUpdated = async (io: SocketIO.Server) => {
   const orders = await getCurrentOrders();

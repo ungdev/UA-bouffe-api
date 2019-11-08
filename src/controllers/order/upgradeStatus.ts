@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
+import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import errorHandler from '../../utils/errorHandler';
 import Order from '../../models/order';
 
