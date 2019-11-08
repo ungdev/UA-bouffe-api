@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, AllowNull, NotNull, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, HasMany, AllowNull } from 'sequelize-typescript';
 import Item from './item';
 
 @Table({

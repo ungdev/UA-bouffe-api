@@ -13,6 +13,7 @@ import { notFound } from './utils/errorHandler';
 import routes from './controllers';
 import restricLocalIP from './middlewares/restricLocalIP';
 import log from './utils/log';
+import devEnv from './utils/devEnv';
 
 const app = express();
 const server = http.createServer(app);
@@ -25,12 +26,12 @@ config();
 
   app.locals.io = io;
 
-  app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
+  app.use(morgan(devEnv ? 'dev' : 'combined'));
   app.use(cors());
   app.use(helmet());
   app.use(bodyParser.json());
 
-  if (process.env.NODE_ENV === 'development') app.use(bodyParser.urlencoded({ extended: true })); // For postman
+  if (devEnv) app.use(bodyParser.urlencoded({ extended: true })); // For postman
 
   app.use(restricLocalIP());
   app.use(routes());

@@ -1,7 +1,6 @@
-import { Table, Column, Model, HasMany, AllowNull, NotNull, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, HasMany, AllowNull, DataType } from 'sequelize-typescript';
 import { Status, PaymentMethod } from '../types';
 import OrderItem from './orderItem';
-import Item from './item';
 
 @Table({
   tableName: 'orders',

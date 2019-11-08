@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, AllowNull, NotNull, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Category from './category';
 
 @Table({
@@ -32,4 +32,7 @@ export default class Item extends Model<Item> {
   @ForeignKey(() => Category)
   @Column
   public categoryId: number;
+
+  @BelongsTo(() => Category)
+  public category: Category;
 }

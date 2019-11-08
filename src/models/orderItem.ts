@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, AllowNull, NotNull, DataType, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Order from './order';
 import Item from './item';
 
@@ -19,4 +19,10 @@ export default class OrderItem extends Model<OrderItem> {
   @AllowNull(false)
   @Column
   public itemId: number;
+
+  @BelongsTo(() => Order)
+  public order: Order;
+
+  @BelongsTo(() => Item)
+  public item: Item;
 }

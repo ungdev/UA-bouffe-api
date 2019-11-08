@@ -1,8 +1,7 @@
 import path from 'path';
 import { Sequelize } from 'sequelize-typescript';
 import log from './utils/log';
-import Item from './models/item';
-import Order from './models/order';
+import devEnv from './utils/devEnv';
 
 export default async () => {
   const sequelize = new Sequelize({
@@ -24,8 +23,13 @@ export default async () => {
     }
   });
 
-  // const modelsCreated = models(sequelize);
-  await sequelize.sync();
+  const forceSync = devEnv && process.argv.some((arg) => arg === '--force-sync');
+
+  if (forceSync) {
+    log.warn('Database synced with force. Be carefull...');
+  }
+
+  await sequelize.sync({ force: forceSync });
   log.info('Connected to database');
 
   return { sequelize };
