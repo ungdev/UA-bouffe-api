@@ -14,7 +14,7 @@ const getCurrentOrders = () => {
         include: [
           {
             model: Item,
-            attributes: ['name', 'key', 'promokey'],
+            attributes: ['id', 'name', 'key', 'promokey'],
             include: [
               {
                 model: Category,

@@ -1,25 +1,49 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { Op } from 'sequelize';
 import errorHandler from '../../utils/errorHandler';
 import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
 import Order from '../../models/order';
 import OrderItem from '../../models/orderItem';
+import { BodyRequest, PaymentMethod } from '../../types';
+import Item from '../../models/item';
 
-const create = async (req: Request, res: Response) => {
+interface Body {
+  method: PaymentMethod;
+  place: string;
+  orgaPrice: boolean;
+  orders: Array<number>;
+}
+
+const create = async (req: BodyRequest<Body>, res: Response) => {
   try {
-    const { method, items, place } = req.body;
+    const { method, place, orgaPrice, orders } = req.body;
 
-    if (items.length === 0) {
+    if (orders.length === 0) {
       return res
         .status(400)
         .json({ error: 'BASKET_EMPTY' })
         .end();
     }
 
+    // Calculates promotions...
+    const items = await Item.findAll({
+      where: {
+        id: {
+          [Op.in]: orders,
+        },
+      },
+    });
+
+    const orderItems = items.map((item) => ({
+      itemId: item.id,
+      price: orgaPrice ? item.orgaPrice : item.price,
+    }));
+
     await Order.create(
       {
         method,
         place,
-        orderItems: items,
+        orderItems,
       },
       {
         include: [OrderItem],

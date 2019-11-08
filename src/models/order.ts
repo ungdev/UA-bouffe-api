@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, AllowNull, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, HasMany, AllowNull, DataType, Default } from 'sequelize-typescript';
 import { Status, PaymentMethod } from '../types';
 import OrderItem from './orderItem';
 
@@ -11,6 +11,7 @@ export default class Order extends Model<Order> {
   public place: string;
 
   @AllowNull(false)
+  @Default('pending')
   @Column(DataType.ENUM('pending', 'preparing', 'ready', 'finished'))
   public status: Status;
 

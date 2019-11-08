@@ -49,6 +49,7 @@
     "dev": "ts-node-dev --no-notify src/server.ts",
     "dev:force": "ts-node-dev --no-notify src/server.ts --force-sync",
     "seed": "node db/seed.js",
+    "seed-dev": "node db/seed.js --dev",
     "lint": "eslint src/ --ext .ts",
     "lint-fix": "eslint --fix src/ --ext .ts"
   }
