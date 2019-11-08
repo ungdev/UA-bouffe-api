@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
-import { OrderModel, OrderItemModel, ItemModel, CategoryModel } from '../../types';
 import errorHandler from '../../utils/errorHandler';
 import notifyOrdersUpdated from '../../utils/notifyOrdersUpdated';
+import Order from '../../models/order';
+import OrderItem from '../../models/orderItem';
 
-const create = (Order: OrderModel, OrderItem: OrderItemModel, Item: ItemModel, Category: CategoryModel) => async (
-  req: Request,
-  res: Response,
-) => {
+const create = async (req: Request, res: Response) => {
   try {
     const { method, items, place } = req.body;
 
@@ -16,8 +14,6 @@ const create = (Order: OrderModel, OrderItem: OrderItemModel, Item: ItemModel, C
         .json({ error: 'BASKET_EMPTY' })
         .end();
     }
-
-    // items = items.map(item => )
 
     await Order.create(
       {
@@ -30,7 +26,7 @@ const create = (Order: OrderModel, OrderItem: OrderItemModel, Item: ItemModel, C
       },
     );
 
-    notifyOrdersUpdated(Order, OrderItem, Item, Category, req.app.locals.io);
+    notifyOrdersUpdated(req.app.locals.io);
 
     return res.status(204).end();
   } catch (err) {

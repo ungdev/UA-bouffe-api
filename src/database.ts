@@ -1,11 +1,17 @@
-import { Sequelize } from 'sequelize';
-import models from './models';
+import path from 'path';
+import { Sequelize } from 'sequelize-typescript';
 import log from './utils/log';
+import Item from './models/item';
+import Order from './models/order';
 
 export default async () => {
-  const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  const sequelize = new Sequelize({
+    database: process.env.DB_NAME,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
     dialect: 'mysql',
+    models: [path.join(__dirname, 'models')],
     logging: (sql: string) => log.info(sql),
   });
 
@@ -18,9 +24,9 @@ export default async () => {
     }
   });
 
-  const modelsCreated = models(sequelize);
+  // const modelsCreated = models(sequelize);
   await sequelize.sync();
   log.info('Connected to database');
 
-  return { sequelize, models: modelsCreated };
+  return { sequelize };
 };

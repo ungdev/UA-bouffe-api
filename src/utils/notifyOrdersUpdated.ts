@@ -1,14 +1,7 @@
 import getCurrentOrders from './orders';
-import { OrderModel, OrderItemModel, ItemModel, CategoryModel } from '../types';
 
-const notifyOrdersUpdated = async (
-  Order: OrderModel,
-  OrderItem: OrderItemModel,
-  Item: ItemModel,
-  Category: CategoryModel,
-  io: SocketIO.Server,
-) => {
-  const orders = await getCurrentOrders(Order, OrderItem, Item, Category);
+const notifyOrdersUpdated = async (io: SocketIO.Server) => {
+  const orders = await getCurrentOrders();
   io.sockets.emit('orderUpdate', orders);
 };
 

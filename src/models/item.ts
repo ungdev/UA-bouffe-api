@@ -1,12 +1,35 @@
-import { DataTypes, Sequelize } from 'sequelize';
-import { ItemModel } from '../types';
+import { Table, Column, Model, HasMany, AllowNull, NotNull, ForeignKey } from 'sequelize-typescript';
+import Category from './category';
 
-export default (sequelize: Sequelize) =>
-  sequelize.define('item', {
-    name: { type: DataTypes.STRING, allowNull: false, unique: true },
-    key: { type: DataTypes.STRING, allowNull: false, unique: true },
-    promoKey: { type: DataTypes.STRING },
-    price: { type: DataTypes.INTEGER, allowNull: false },
-    orgaPrice: { type: DataTypes.INTEGER, allowNull: false },
-    available: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
-  }) as ItemModel;
+@Table({
+  tableName: 'items',
+})
+export default class Item extends Model<Item> {
+  @AllowNull(false)
+  @Column
+  public name: string;
+
+  @AllowNull(false)
+  @Column
+  public key: string;
+
+  @Column
+  public promoKey?: string;
+
+  @AllowNull(false)
+  @Column
+  public price: number;
+
+  @AllowNull(false)
+  @Column
+  public orgaPrice: number;
+
+  @AllowNull(false)
+  @Column
+  public available: boolean;
+
+  @AllowNull(false)
+  @ForeignKey(() => Category)
+  @Column
+  public categoryId: number;
+}

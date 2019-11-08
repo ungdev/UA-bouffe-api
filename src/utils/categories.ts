@@ -1,6 +1,7 @@
-import { CategoryModel, ItemModel } from '../types';
+import Category from '../models/category';
+import Item from '../models/item';
 
-const getCategories = (Category: CategoryModel, Item: ItemModel) => {
+const getCategories = () => {
   return Category.findAll({
     attributes: ['id', 'name', 'key', 'needsPreparation'],
     include: [

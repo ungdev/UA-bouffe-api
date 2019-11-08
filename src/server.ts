@@ -21,9 +21,8 @@ const io = socketio(server);
 config();
 
 (async () => {
-  const { models } = await database();
+  await database();
 
-  app.locals.models = models;
   app.locals.io = io;
 
   app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
@@ -34,7 +33,8 @@ config();
   if (process.env.NODE_ENV === 'development') app.use(bodyParser.urlencoded({ extended: true })); // For postman
 
   app.use(restricLocalIP());
-  app.use(routes(models));
+  app.use(routes());
+
   app.use(notFound());
 
   server.listen(process.env.APP_PORT, () => {

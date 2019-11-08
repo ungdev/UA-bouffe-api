@@ -1,7 +1,10 @@
 import { Op } from 'sequelize';
-import { OrderModel, OrderItemModel, ItemModel, CategoryModel } from '../types';
+import Order from '../models/order';
+import OrderItem from '../models/orderItem';
+import Item from '../models/item';
+import Category from '../models/category';
 
-const getCurrentOrders = (Order: OrderModel, OrderItem: OrderItemModel, Item: ItemModel, Category: CategoryModel) => {
+const getCurrentOrders = () => {
   return Order.findAll({
     attributes: ['id', 'place', 'status', 'method', 'createdAt'],
     include: [

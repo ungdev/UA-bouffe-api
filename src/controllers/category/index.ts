@@ -1,13 +1,10 @@
 import { Router } from 'express';
-import { Models } from '../../types';
 import list from './list';
 
-export default (models: Models) => {
+export default () => {
   const router = Router();
 
-  const { Item, Category } = models;
-
-  router.get('/', list(Category, Item));
+  router.get('/', list);
 
   return router;
 };

@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import { CategoryModel, ItemModel } from '../../types';
 import errorHandler from '../../utils/errorHandler';
 import getCategories from '../../utils/categories';
 
-export default (Category: CategoryModel, Item: ItemModel) => async (req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
   try {
-    const categories = await getCategories(Category, Item);
+    const categories = await getCategories();
 
     return res
       .status(200)
