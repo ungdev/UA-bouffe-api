@@ -1,4 +1,5 @@
 import { Model as SequelizeModel, BuildOptions } from 'sequelize/types';
+import * as Sequelize from 'sequelize';
 
 /**
  * DISCLAMER: Dans mode développement, la modification de ce fichier ne sera peut-être pas prise en compte par le serveur de dev
@@ -47,6 +48,40 @@ export enum PaymentMethod {
   Cash = 'cash',
 }
 // Sequelize
+
+interface BaseAttributes {
+  id?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ItemAttributes extends BaseAttributes {
+  name: string;
+  key: string;
+  promoKey: string;
+  price: number;
+  orgaPrice: number;
+  available: boolean;
+}
+
+export interface ItemInstance extends Sequelize.Instance<ItemAttributes>, ItemAttributes {}
+
+export interface CategoryAttributes extends BaseAttributes {
+  name: string;
+  key: string;
+  needsPreparation: boolean;
+}
+
+export interface OrderAttributes extends BaseAttributes {
+  place: string;
+  method: PaymentMethod;
+  status: Status;
+}
+
+export interface OrderItemAttributes extends BaseAttributes {
+  price: number;
+}
+
 export interface DefaultStatic extends SequelizeModel {
   readonly id: number;
 }
