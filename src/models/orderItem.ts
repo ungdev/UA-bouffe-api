@@ -6,10 +6,6 @@ import Item from './item';
   tableName: 'orderitems',
 })
 export default class OrderItem extends Model<OrderItem> {
-  @AllowNull(false)
-  @Column
-  public price: number;
-
   @ForeignKey(() => Order)
   @AllowNull(false)
   @Column

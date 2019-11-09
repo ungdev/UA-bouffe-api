@@ -38,10 +38,27 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     const needPreparation = items.some((item) => item.category.needsPreparation);
     const status = needPreparation ? Status.PENDING : Status.READY;
 
+    const orderItems = orders.map((order) => ({
+      itemId: items.find((item) => item.id === order).id,
+    }));
+
+    const price = orders.reduce((acc, order) => {
+      const item = items.find((_item) => _item.id === order);
+
+      const itemPrice = orgaPrice ? item.orgaPrice : item.price;
+
+      return acc + itemPrice;
+    }, 0);
+    /*
     const orderItems = items.map((item) => ({
       itemId: item.id,
-      price: orgaPrice ? item.orgaPrice : item.price,
     }));
+
+
+    const price = orderItems.reduce((acc, orderItem) => {
+
+    }, 0) */
+    // const price = items.reduce((acc, item) => acc + (orgaPrice ? item.orgaPrice : item.price), 0);
 
     await Order.create(
       {
@@ -49,6 +66,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         place,
         orderItems,
         status,
+        price,
       },
       {
         include: [OrderItem],

@@ -19,6 +19,10 @@ export default class Order extends Model<Order> {
   @Column(DataType.ENUM('card', 'cash'))
   public method!: PaymentMethod;
 
+  @AllowNull(false)
+  @Column
+  public price: number;
+
   @HasMany(() => OrderItem)
   public orderItems: OrderItem[];
 }
