@@ -4,9 +4,10 @@ import { badRequest, created } from '../../utils/responses';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import Order from '../../models/order';
 import OrderItem from '../../models/orderItem';
-import { BodyRequest, PaymentMethod, Error } from '../../types';
+import { BodyRequest, PaymentMethod, Error, Status } from '../../types';
 import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
+import Category from '../../models/category';
 
 interface Body {
   method: PaymentMethod;
@@ -17,6 +18,7 @@ interface Body {
 
 const create = async (req: BodyRequest<Body>, res: Response) => {
   try {
+    // Orders: [orders ids]
     const { method, place, orgaPrice, orders } = req.body;
 
     if (orders.length === 0) {
@@ -25,12 +27,16 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
     // Calculates promotions...
     const items = await Item.findAll({
+      include: [Category],
       where: {
         id: {
           [Op.in]: orders,
         },
       },
     });
+
+    const needPreparation = items.some((item) => item.category.needsPreparation);
+    const status = needPreparation ? Status.PENDING : Status.READY;
 
     const orderItems = items.map((item) => ({
       itemId: item.id,
@@ -42,6 +48,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         method,
         place,
         orderItems,
+        status,
       },
       {
         include: [OrderItem],
