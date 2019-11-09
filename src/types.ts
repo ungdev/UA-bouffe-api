@@ -20,3 +20,9 @@ export enum PaymentMethod {
 export interface BodyRequest<T> extends Request {
   body: T;
 }
+
+export interface Token {
+  name: string;
+  key: string;
+  permissions: string;
+}

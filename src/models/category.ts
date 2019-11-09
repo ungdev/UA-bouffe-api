@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, AllowNull } from 'sequelize-typescript';
+import { Table, Column, Model, HasMany, AllowNull, Unique } from 'sequelize-typescript';
 import Item from './item';
 
 @Table({
@@ -6,10 +6,12 @@ import Item from './item';
 })
 export default class Category extends Model<Category> {
   @AllowNull(false)
+  @Unique
   @Column
   public name: string;
 
   @AllowNull(false)
+  @Unique
   @Column
   public key: string;
 

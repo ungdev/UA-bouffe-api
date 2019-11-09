@@ -1,1 +1,0 @@
-INSERT INTO uabouffe.orders (id, place, status, method, createdAt, updatedAt) VALUES (1, 'A02', 'pending', 'card', '2019-11-07 18:56:42', '2019-11-07 18:56:44');

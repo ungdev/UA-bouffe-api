@@ -1,1 +1,0 @@
-INSERT INTO uabouffe.orderitems (id, price, createdAt, updatedAt, orderId, itemId) VALUES (1, 200, '2019-11-07 18:56:56', '2019-11-07 18:56:57', 1, 1);

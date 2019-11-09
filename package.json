@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -22,6 +23,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.28",
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.6",
@@ -47,9 +49,8 @@
     "build": "tsc",
     "start": "node build/server.js",
     "dev": "ts-node-dev --no-notify src/server.ts",
-    "dev:force": "ts-node-dev --no-notify src/server.ts --force-sync",
-    "seed": "node db/seed.js",
-    "seed-dev": "node db/seed.js --dev",
+    "seed": "ts-node-dev --no-notify -T db/seed.ts",
+    "seed:force": "ts-node-dev --no-notify -T db/seed.ts --force-sync",
     "lint": "eslint src/ --ext .ts",
     "lint-fix": "eslint --fix src/ --ext .ts"
   }

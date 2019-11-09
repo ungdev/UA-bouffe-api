@@ -1,21 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import getToken from '../utils/getToken';
 
 export default () => (req: Request, res: Response, next: NextFunction) => {
-  const authorization = req.get('authorization');
+  try {
+    const token = getToken(req);
 
-  if (!authorization) {
+    if (token) {
+      jwt.verify(token, process.env.APP_TOKEN_SECRET);
+      return next();
+    }
+
     return res
       .status(401)
       .json({ error: 'UNAUTHENTICATED' })
       .end();
-  }
-
-  const token = authorization.split(' ')[1];
-
-  try {
-    jwt.verify(token, process.env.APP_TOKEN_SECRET);
-    return next();
   } catch (err) {
     return res
       .status(400)
