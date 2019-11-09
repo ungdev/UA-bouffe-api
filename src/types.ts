@@ -1,5 +1,4 @@
 import { Request } from 'express';
-
 /**
  * DISCLAMER: Dans mode développement, la modification de ce fichier ne sera peut-être pas prise en compte par le serveur de dev
  * Redémarrer le serveur dans ce cas là
@@ -17,20 +16,23 @@ export enum PaymentMethod {
   Cash = 'cash',
 }
 
-export interface BodyRequest<T> extends Request {
-  body: T;
-}
-
 export interface Token {
   name: string;
   key: string;
-  permissions: string;
+  permissions: Permission;
+}
+
+export enum Permission {
+  ADMIN = 'admin',
+  SELLER = 'seller',
+  PIZZA = 'pizza',
 }
 
 export enum Error {
   // 400
   BAD_REQUEST = 'BAD_REQUEST',
   BASKET_EMPTY = 'BASKET_EMPTY',
+  ORDER_FINISHED = 'ORDER_FINISHED',
 
   // 401
   UNAUTHENTICATED = 'UNAUTHENTICATED',
@@ -45,7 +47,19 @@ export enum Error {
   // 404
   NOT_FOUND = 'NOT_FOUND',
   ITEM_NOT_FOUND = 'ITEM_NOT_FOUND',
+  ORDER_NOT_FOUND = 'ORDER_NOT_FOUND',
 
   // 500
   UNKNOWN = 'UNKNOWN',
+}
+
+// Express method merging
+declare module 'express' {
+  interface Request {
+    permissions?: Permission;
+  }
+}
+
+export interface BodyRequest<T> extends Request {
+  body: T;
 }

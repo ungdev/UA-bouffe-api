@@ -1,24 +1,34 @@
 import { Request, Response } from 'express';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
-import { noContent } from '../../utils/responses';
+import { noContent, notFound, badRequest, unauthorized } from '../../utils/responses';
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
+import { Status, Permission, Error } from '../../types';
 
 const upgradeStatus = async (req: Request, res: Response) => {
   try {
     // todo: mettre de la validation
-    const { status } = req.body;
+    const statusOrdered = [Status.PENDING, Status.PREPARING, Status.READY, Status.FINISHED];
 
-    await Order.update(
-      {
-        status,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      },
-    );
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return notFound(res, Error.ORDER_NOT_FOUND);
+    }
+
+    if (order.status === Status.FINISHED) {
+      return badRequest(res, Error.ORDER_FINISHED);
+    }
+
+    // A pizza role can't finish orders
+    if (req.permissions === Permission.PIZZA && order.status === Status.READY) {
+      return unauthorized(res);
+    }
+
+    const newStatus = statusOrdered[statusOrdered.indexOf(order.status) + 1];
+    order.status = newStatus;
+
+    await order.save();
 
     notifyOrdersUpdated(req.app.locals.io);
 
