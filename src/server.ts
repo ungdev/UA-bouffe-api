@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import http from 'http';
 import socketio from 'socket.io';
 
@@ -9,7 +9,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import database from './database';
-import { notFound } from './utils/errorHandler';
+import { notFound } from './utils/responses';
 import routes from './controllers';
 import restricLocalIP from './middlewares/restricLocalIP';
 import log from './utils/log';
@@ -36,7 +36,7 @@ config();
   app.use(restricLocalIP());
   app.use(routes());
 
-  app.use(notFound());
+  app.use((req: Request, res: Response) => notFound(res));
 
   server.listen(process.env.APP_PORT, () => {
     log.info(`Listening on ${process.env.APP_PORT}...`);

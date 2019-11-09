@@ -1,11 +1,12 @@
 import { Response } from 'express';
 import { Op } from 'sequelize';
-import errorHandler from '../../utils/errorHandler';
+import { badRequest, created } from '../../utils/responses';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import Order from '../../models/order';
 import OrderItem from '../../models/orderItem';
-import { BodyRequest, PaymentMethod } from '../../types';
+import { BodyRequest, PaymentMethod, Error } from '../../types';
 import Item from '../../models/item';
+import errorHandler from '../../utils/errorHandler';
 
 interface Body {
   method: PaymentMethod;
@@ -19,10 +20,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     const { method, place, orgaPrice, orders } = req.body;
 
     if (orders.length === 0) {
-      return res
-        .status(400)
-        .json({ error: 'BASKET_EMPTY' })
-        .end();
+      return badRequest(res, Error.BASKET_EMPTY);
     }
 
     // Calculates promotions...
@@ -52,9 +50,9 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
     notifyOrdersUpdated(req.app.locals.io);
 
-    return res.status(201).end();
+    return created(res);
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };
 

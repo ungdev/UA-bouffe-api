@@ -1,16 +1,14 @@
 import { Request, Response } from 'express';
-import errorHandler from '../../utils/errorHandler';
+import { success } from '../../utils/responses';
 import getCategories from '../../utils/categories';
+import errorHandler from '../../utils/errorHandler';
 
 export default async (req: Request, res: Response) => {
   try {
     const categories = await getCategories();
 
-    return res
-      .status(200)
-      .json(categories)
-      .end();
+    return success(res, categories);
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };

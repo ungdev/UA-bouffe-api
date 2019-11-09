@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { compareSync } from 'bcrypt';
-import errorHandler from '../../utils/errorHandler';
+import { unauthenticated, success } from '../../utils/responses';
 import generateToken from '../../utils/generateToken';
 import User from '../../models/user';
+import { Error } from '../../types';
+import errorHandler from '../../utils/errorHandler';
 
 export default () => async (req: Request, res: Response) => {
   try {
@@ -13,17 +15,15 @@ export default () => async (req: Request, res: Response) => {
     const user = users.find((_user) => compareSync(pin, _user.password));
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ error: 'INVALID_PIN' })
-        .end();
+      return unauthenticated(res, Error.INVALID_PIN);
     }
 
-    return res
-      .status(200)
-      .json({ token: generateToken(user.name, user.key, user.permissions), name: user.name, key: user.key })
-      .end();
+    return success(res, {
+      token: generateToken(user.name, user.key, user.permissions),
+      name: user.name,
+      key: user.key,
+    });
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };

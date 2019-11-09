@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
-import errorHandler from '../../utils/errorHandler';
+import { noContent } from '../../utils/responses';
 import Order from '../../models/order';
+import errorHandler from '../../utils/errorHandler';
 
 const upgradeStatus = async (req: Request, res: Response) => {
-  // todo: mettre de la validation
-  const { status } = req.body;
-
   try {
+    // todo: mettre de la validation
+    const { status } = req.body;
+
     await Order.update(
       {
         status,
@@ -21,9 +22,9 @@ const upgradeStatus = async (req: Request, res: Response) => {
 
     notifyOrdersUpdated(req.app.locals.io);
 
-    return res.status(204).end();
+    return noContent(res);
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };
 

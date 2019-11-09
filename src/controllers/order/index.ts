@@ -9,7 +9,7 @@ export default () => {
 
   router.get('/', list);
   router.post('/', hasPermission('sell'), create);
-  router.patch('/:id', hasPermission('admin'), upgradeStatus);
+  router.patch('/:id', hasPermission('pizza'), upgradeStatus);
 
   return router;
 };

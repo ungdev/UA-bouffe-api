@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import { unauthorized } from '../utils/responses';
+import { Error } from '../types';
 
 const isLocalhost = (ip: string) => ip === '1' || ip === '127.0.0.1';
 
@@ -20,8 +22,5 @@ export default () => (req: Request, res: Response, next: NextFunction) => {
     return next();
   }
 
-  return res
-    .status(403)
-    .json({ error: 'NOT_IN_LOCAL_NETWORK' })
-    .end();
+  return unauthorized(res, Error.NOT_IN_LOCAL_NETWORK);
 };

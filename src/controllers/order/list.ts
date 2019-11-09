@@ -1,16 +1,14 @@
 import { Request, Response } from 'express';
 import getCurrentOrders from '../../utils/orders';
+import { success } from '../../utils/responses';
 import errorHandler from '../../utils/errorHandler';
 
 export default async (req: Request, res: Response) => {
   try {
     const orders = await getCurrentOrders();
 
-    return res
-      .status(200)
-      .json(orders)
-      .end();
+    return success(res, orders);
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };

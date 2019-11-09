@@ -1,36 +1,27 @@
 import { Request, Response } from 'express';
-import errorHandler from '../../utils/errorHandler';
+import { notFound, noContent } from '../../utils/responses';
 import Item from '../../models/item';
 import notifyItemsUpdated from '../../sockets/notifyItemsUpdated';
+import { Error } from '../../types';
+import errorHandler from '../../utils/errorHandler';
 
 export default async (req: Request, res: Response) => {
   try {
-    console.log('azqswx');
     const { id } = req.params;
-    console.log('ezafvgsvd');
     const item = await Item.findByPk(id);
 
-    console.log('aqw');
     if (!item) {
-      return res
-        .status(404)
-        .json({ error: 'ITEM_NOT_FOUND' })
-        .end();
+      return notFound(res, Error.ITEM_NOT_FOUND);
     }
-
-    console.log('gné');
 
     item.available = !item.available;
 
-    console.log('aaa');
     await item.save();
-    console.log('bb');
 
     notifyItemsUpdated(req.app.locals.io);
-    console.log('cc');
 
-    return res.status(204).end();
+    return noContent(res);
   } catch (err) {
-    return errorHandler(err, res);
+    return errorHandler(res, err);
   }
 };
