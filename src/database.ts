@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize-typescript';
 import log from './utils/log';
 import devEnv from './utils/devEnv';
 
-export default async (forceSync = false) => {
+export default async (_forceSync = false) => {
   const sequelize = new Sequelize({
     database: process.env.DB_NAME,
     username: process.env.DB_USERNAME,
@@ -23,11 +23,11 @@ export default async (forceSync = false) => {
     }
   });
 
-  if (forceSync && !devEnv) {
+  if (_forceSync && !devEnv) {
     log.error('You must set your NODE_ENV to development to force sync the database');
   }
 
-  forceSync = forceSync && devEnv;
+  const forceSync = _forceSync && devEnv;
 
   if (forceSync) {
     log.warn('Database synced with force. Be carefull...');

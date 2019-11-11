@@ -23,7 +23,6 @@
     "no-console": "error",
     "no-alert": "error",
     "object-curly-newline": "off",
-    "no-param-reassign": "off",
     "import/default": "off",
     "import/no-cycle": "off",
     "radix": "off"
