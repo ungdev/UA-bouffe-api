@@ -1,8 +1,9 @@
 import getCurrentOrders from '../utils/orders';
+import log from '../utils/log';
 
 const notifyOrdersUpdated = async (io: SocketIO.Server) => {
   const orders = await getCurrentOrders();
-  console.log('OrderUpdate: categoryUpdate');
+  log.info('Socket emit: orderUpdate');
   io.sockets.emit('orderUpdate', orders);
 };
 

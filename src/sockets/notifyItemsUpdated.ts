@@ -1,8 +1,9 @@
 import getCategories from '../utils/categories';
+import log from '../utils/log';
 
 const notifyItemsUpdated = async (io: SocketIO.Server) => {
   const categories = await getCategories();
-  console.log('Socket: categoryUpdate');
+  log.info('Socket emit: categoryUpdate');
   io.sockets.emit('categoryUpdate', categories);
 };
 
