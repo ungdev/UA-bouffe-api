@@ -21,7 +21,7 @@ const upgradeStatus = async (req: Request, res: Response) => {
     }
 
     // A pizza role can't finish orders
-    if (req.permissions === Permission.PIZZA && order.status === Status.READY) {
+    if (req.user.permissions === Permission.PIZZA && order.status === Status.READY) {
       return unauthorized(res);
     }
 

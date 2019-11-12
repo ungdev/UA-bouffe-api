@@ -11,7 +11,7 @@ export default (permission: string) => async (req: Request, res: Response, next:
     if (token) {
       const decoded = jwt.verify(token, process.env.APP_TOKEN_SECRET) as Token;
 
-      req.permissions = decoded.permissions;
+      req.user = decoded;
 
       if (!permission) {
         return next();

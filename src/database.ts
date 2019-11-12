@@ -23,11 +23,11 @@ export default async (_forceSync = false) => {
     }
   });
 
-  if (_forceSync && !devEnv) {
+  if (_forceSync && !devEnv()) {
     log.error('You must set your NODE_ENV to development to force sync the database');
   }
 
-  const forceSync = _forceSync && devEnv;
+  const forceSync = _forceSync && devEnv();
 
   if (forceSync) {
     log.warn('Database synced with force. Be carefull...');
