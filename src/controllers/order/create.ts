@@ -8,6 +8,7 @@ import { BodyRequest, PaymentMethod, Error, Status } from '../../types';
 import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
+import { computePromotions } from '../../utils/promotions';
 
 interface Body {
   method: PaymentMethod;
@@ -26,7 +27,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     }
 
     // Calculates promotions...
-    const items = await Item.findAll({
+    const itemCatalog = await Item.findAll({
       include: [Category],
       where: {
         id: {
@@ -35,30 +36,15 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
       },
     });
 
-    const needPreparation = items.some((item) => item.category.needsPreparation);
+    const needPreparation = itemCatalog.some((item) => item.category.needsPreparation);
     const status = needPreparation ? Status.PENDING : Status.READY;
 
-    const orderItems = orders.map((order) => ({
-      itemId: items.find((item) => item.id === order).id,
-    }));
+    const items = orders.map((order) => itemCatalog.find((item) => item.id === order));
+    const promotionComputation = computePromotions(items, orgaPrice);
 
-    const price = orders.reduce((acc, order) => {
-      const item = items.find((_item) => _item.id === order);
-
-      const itemPrice = orgaPrice ? item.orgaPrice : item.price;
-
-      return acc + itemPrice;
-    }, 0);
-    /*
     const orderItems = items.map((item) => ({
       itemId: item.id,
     }));
-
-
-    const price = orderItems.reduce((acc, orderItem) => {
-
-    }, 0) */
-    // const price = items.reduce((acc, item) => acc + (orgaPrice ? item.orgaPrice : item.price), 0);
 
     await Order.create(
       {
@@ -66,7 +52,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         place,
         orderItems,
         status,
-        price,
+        total: promotionComputation.total,
       },
       {
         include: [OrderItem],

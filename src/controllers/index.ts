@@ -4,6 +4,7 @@ import order from './order';
 import isAuth from '../middlewares/isAuth';
 import category from './category';
 import item from './item';
+import promotions from './promotions';
 
 const routes = () => {
   const router = Router();
@@ -12,6 +13,7 @@ const routes = () => {
   router.use('/orders', isAuth(), order());
   router.use('/categories', isAuth(), category());
   router.use('/items', isAuth(), item());
+  router.use('/promotions', isAuth(), promotions());
 
   return router;
 };

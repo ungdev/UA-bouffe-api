@@ -25,6 +25,7 @@
     "object-curly-newline": "off",
     "import/default": "off",
     "import/no-cycle": "off",
-    "radix": "off"
+    "radix": "off",
+    "import/prefer-default-export": "off"
   }
 }

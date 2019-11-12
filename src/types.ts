@@ -28,6 +28,20 @@ export enum Permission {
   PIZZA = 'pizza',
 }
 
+// This interface is also used in Items
+export interface Price {
+  price: number;
+  orgaPrice: number;
+}
+
+export interface Promotion extends Price {
+  name: string;
+  key: string;
+  formula: Array<string>; // array of promo key
+  price: number;
+  orgaPrice: number;
+}
+
 export enum Error {
   // 400
   BAD_REQUEST = 'BAD_REQUEST',

@@ -1,10 +1,11 @@
 import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo, Unique } from 'sequelize-typescript';
 import Category from './category';
+import { Price } from '../types';
 
 @Table({
   tableName: 'items',
 })
-export default class Item extends Model<Item> {
+export default class Item extends Model<Item> implements Price {
   @AllowNull(false)
   @Unique
   @Column

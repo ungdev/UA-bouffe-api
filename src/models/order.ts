@@ -21,7 +21,7 @@ export default class Order extends Model<Order> {
 
   @AllowNull(false)
   @Column
-  public price: number;
+  public total: number;
 
   @HasMany(() => OrderItem)
   public orderItems: OrderItem[];
