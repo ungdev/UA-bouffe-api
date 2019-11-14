@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import User from './models/user';
 /**
  * DISCLAMER: Dans mode développement, la modification de ce fichier ne sera peut-être pas prise en compte par le serveur de dev
  * Redémarrer le serveur dans ce cas là
