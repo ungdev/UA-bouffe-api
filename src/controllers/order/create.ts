@@ -9,6 +9,7 @@ import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
 import { computePromotions } from '../../utils/promotions';
+import sendSlackMessage from '../../utils/sendSlackMessage';
 
 interface Body {
   method: PaymentMethod;
@@ -58,6 +59,8 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         include: [OrderItem],
       },
     );
+
+    sendSlackMessage();
 
     notifyOrdersUpdated(req.app.locals.io);
 
