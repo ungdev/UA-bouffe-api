@@ -3,7 +3,6 @@
     "module": "commonjs",
     "outDir": "build",
     "removeComments": true,
-    "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
