@@ -13,6 +13,7 @@ export default async (_forceSync = false) => {
       password: process.env.DB_PASSWORD,
       host: process.env.DB_HOST,
       dialect: 'mysql',
+      port: parseInt(process.env.DB_PORT),
       models: [path.join(__dirname, 'models')],
       logging: (sql: string) => log.info(sql),
     });
