@@ -9,9 +9,11 @@ dotenv.config();
 (async () => {
   const forceSync = process.argv.some((arg) => arg === '--force-sync');
 
-  await database(forceSync);
+  const { sequelize } = await database(forceSync);
 
   await seedCategories();
   await seedItems();
   await seedUsers();
+
+  sequelize.close();
 })();

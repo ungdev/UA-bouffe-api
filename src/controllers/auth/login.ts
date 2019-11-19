@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { compareSync } from 'bcrypt';
 import { unauthenticated, success } from '../../utils/responses';
 import generateToken from '../../utils/generateToken';
 import User from '../../models/user';
@@ -12,7 +11,7 @@ export default () => async (req: Request, res: Response) => {
 
     const users = await User.findAll();
 
-    const user = users.find((_user) => compareSync(pin, _user.password));
+    const user = users.find((_user) => pin === process.env[`APP_PIN_${_user.key.toUpperCase()}`]);
 
     if (!user) {
       return unauthenticated(res, Error.INVALID_PIN);

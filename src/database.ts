@@ -31,6 +31,7 @@ export default async (_forceSync = false) => {
 
   if (_forceSync && !devEnv()) {
     log.error('You must set your NODE_ENV to development to force sync the database');
+    process.exit(1);
   }
 
   const forceSync = _forceSync && devEnv();
