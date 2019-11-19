@@ -36,7 +36,7 @@ export default async (_forceSync = false) => {
   const forceSync = _forceSync && devEnv();
 
   if (forceSync) {
-    log.warn('Database synced with force. Be carefull...');
+    log.warn('Database synced with force. Be careful...');
   }
 
   await sequelize.sync({ force: forceSync });

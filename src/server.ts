@@ -18,17 +18,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const dotenvInit = () => {
-  config();
-  const envConfig = parse(fs.readFileSync('.env'));
-
-  // Override NODE_ENV from .env (In dotenv, variables that are already set will not be overwritten)
-  if (envConfig.NODE_ENV) {
-    process.env.NODE_ENV = envConfig.NODE_ENV;
-  }
-};
-
-dotenvInit();
+config();
 
 (async () => {
   await database();
