@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import http from 'http';
 import socketio from 'socket.io';
 import fs from 'fs';
-import { config, parse } from 'dotenv';
+import { config } from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';

@@ -14,12 +14,6 @@ export default class User extends Model<User> {
   @Column
   public key: string;
 
-  // Le password doit être unique car il n'y a pas de nom d'uilisateur. Il faut que le sel soit statique aussi
-  @AllowNull(false)
-  @Unique
-  @Column
-  public password: string;
-
   @Column
   public permissions?: string;
 }
