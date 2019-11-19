@@ -4,15 +4,21 @@ import log from './utils/log';
 import devEnv from './utils/devEnv';
 
 export default async (_forceSync = false) => {
-  const sequelize = new Sequelize({
-    database: process.env.DB_NAME,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
-    models: [path.join(__dirname, 'models')],
-    logging: (sql: string) => log.info(sql),
-  });
+  let sequelize: Sequelize;
+
+  try {
+    sequelize = new Sequelize({
+      database: process.env.DB_NAME,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      host: process.env.DB_HOST,
+      dialect: 'mysql',
+      models: [path.join(__dirname, 'models')],
+      logging: (sql: string) => log.info(sql),
+    });
+  } catch (err) {
+    process.exit(1);
+  }
 
   process.on('SIGINT', async () => {
     try {
