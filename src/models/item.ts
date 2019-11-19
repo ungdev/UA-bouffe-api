@@ -1,4 +1,4 @@
-import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo, Unique } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Category from './category';
 import { Price } from '../types';
 
@@ -7,12 +7,10 @@ import { Price } from '../types';
 })
 export default class Item extends Model<Item> implements Price {
   @AllowNull(false)
-  @Unique
   @Column
   public name: string;
 
   @AllowNull(false)
-  @Unique
   @Column
   public key: string;
 
