@@ -14,7 +14,7 @@ const isPrivate = (ip: string) => {
 };
 
 export default () => (req: Request, res: Response, next: NextFunction) => {
-  const haveToRestrict = process.env.APP_RESTRIC_LOCAL_IP === 'true';
+  const haveToRestrict = process.env.APP_RESTRICT_LOCAL_IP === 'true';
   const ip = (req.header('x-forwarded-for') || req.connection.remoteAddress).split(':');
   const ipv4 = ip[ip.length - 1];
 
