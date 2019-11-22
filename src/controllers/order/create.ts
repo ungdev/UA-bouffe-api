@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { Op } from 'sequelize';
 import { badRequest, created } from '../../utils/responses';
-import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import Order from '../../models/order';
 import OrderItem from '../../models/orderItem';
 import { BodyRequest, PaymentMethod, Error, Status } from '../../types';
@@ -61,9 +60,6 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     );
 
     sendSlackMessage();
-
-    notifyOrdersUpdated(req.app.locals.io);
-
     return created(res);
   } catch (err) {
     return errorHandler(res, err);

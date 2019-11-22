@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { notFound, noContent } from '../../utils/responses';
 import Item from '../../models/item';
-import notifyItemsUpdated from '../../sockets/notifyItemsUpdated';
 import { Error } from '../../types';
 import errorHandler from '../../utils/errorHandler';
 
@@ -17,8 +16,6 @@ export default async (req: Request, res: Response) => {
     item.available = !item.available;
 
     await item.save();
-
-    notifyItemsUpdated(req.app.locals.io);
 
     return noContent(res);
   } catch (err) {
