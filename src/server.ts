@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
+import socketio from 'socket.io';
 import fs from 'fs';
 import { config } from 'dotenv';
 import morgan from 'morgan';
@@ -15,11 +16,14 @@ import devEnv from './utils/devEnv';
 
 const app = express();
 const server = http.createServer(app);
+const io = socketio(server);
 
 config();
 
 (async () => {
   await database();
+
+  app.locals.io = io;
 
   app.use(morgan(devEnv() ? 'dev' : 'combined'));
 

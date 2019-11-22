@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import { noContent, notFound, badRequest, unauthorized } from '../../utils/responses';
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
@@ -28,6 +29,8 @@ const upgradeStatus = async (req: Request, res: Response) => {
     order.status = newStatus;
 
     await order.save();
+
+    notifyOrdersUpdated(req.app.locals.io);
 
     return noContent(res);
   } catch (err) {
