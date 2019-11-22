@@ -34,5 +34,9 @@ yarn lint-fix
 yarn build
 yarn start
 ```
+
+### Pourquoi ne pas utiliser Socket.io
+On peut voir dans les commits précédents que socket.io est utilisé et fonctionnel. Mais malheuresement, la mise en production s'est révélée très compliquée. Impossible de créer une connexion (400 handshake errors). Il a fallu donc l'abandonner pour une solution beaucoup plus bourinne.
+
 ### Licence
 Le code est sous licence MIT.
