@@ -27,7 +27,7 @@ config();
   app.use(
     morgan(':remote-addr - :username - [:date[clf]] :method :status :url - :response-time ms', {
       stream: fs.createWriteStream(`${process.env.APP_PATH_LOGS}/access.log`, { flags: 'a' }),
-      skip: (req) => req.method === 'OPTIONS',
+      skip: (req) => req.method === 'OPTIONS' || req.method === 'GET',
     }),
   );
 
