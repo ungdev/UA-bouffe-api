@@ -47,7 +47,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "pm2-runtime start build/server.js -i 4 --name UA-bouffe-api",
+    "start": "pm2-runtime start build/server.js -i 1 --name UA-bouffe-api",
     "dev": "ts-node-dev --no-notify src/server.ts",
     "seed": "ts-node-dev --no-notify -T db/seed.ts",
     "seed:force": "ts-node-dev --no-notify -T db/seed.ts --force-sync",
