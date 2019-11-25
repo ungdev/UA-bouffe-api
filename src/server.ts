@@ -24,8 +24,10 @@ config();
   app.use(morgan(devEnv() ? 'dev' : 'combined'));
 
   morgan.token('username', (req) => (req.user ? req.user.key : 'anonymous'));
+  morgan.token('ip', (req) => req.header('x-forwarded-for') || req.connection.remoteAddress);
+
   app.use(
-    morgan(':remote-addr - :username - [:date[clf]] :method :status :url - :response-time ms', {
+    morgan(':ip - :username - [:date[clf]] :method :status :url - :response-time ms', {
       stream: fs.createWriteStream(`${process.env.APP_PATH_LOGS}/access.log`, { flags: 'a' }),
       skip: (req) => req.method === 'OPTIONS' || req.method === 'GET',
     }),
