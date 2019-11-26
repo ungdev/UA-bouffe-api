@@ -9,7 +9,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -19,7 +18,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -29,7 +27,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -39,7 +36,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -49,7 +45,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -59,7 +54,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -69,7 +63,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -79,7 +72,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -89,7 +81,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -99,7 +90,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -109,7 +99,6 @@ const seedItems = () => {
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -119,7 +108,6 @@ const seedItems = () => {
       promoKey: null,
       price: 70,
       orgaPrice: 50,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -129,7 +117,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -139,7 +126,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -149,7 +135,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -159,7 +144,6 @@ const seedItems = () => {
       promoKey: null,
       price: 50,
       orgaPrice: 0,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -169,7 +153,6 @@ const seedItems = () => {
       promoKey: null,
       price: 50,
       orgaPrice: 0,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -179,7 +162,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 70,
-      available: 1,
       categoryId: 1,
     },
     {
@@ -189,7 +171,6 @@ const seedItems = () => {
       promoKey: 'barre',
       price: 100,
       orgaPrice: 70,
-      available: 0,
       categoryId: 2,
     },
     {
@@ -199,7 +180,6 @@ const seedItems = () => {
       promoKey: 'barre',
       price: 100,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -209,7 +189,6 @@ const seedItems = () => {
       promoKey: 'barre',
       price: 100,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -219,7 +198,6 @@ const seedItems = () => {
       promoKey: 'barre',
       price: 100,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -229,7 +207,6 @@ const seedItems = () => {
       promoKey: 'barre',
       price: 100,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -239,7 +216,6 @@ const seedItems = () => {
       promoKey: null,
       price: 60,
       orgaPrice: 50,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -249,7 +225,6 @@ const seedItems = () => {
       promoKey: null,
       price: 70,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -259,7 +234,6 @@ const seedItems = () => {
       promoKey: null,
       price: 70,
       orgaPrice: 70,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -269,7 +243,6 @@ const seedItems = () => {
       promoKey: null,
       price: 60,
       orgaPrice: 30,
-      available: 1,
       categoryId: 2,
     },
     {
@@ -279,7 +252,6 @@ const seedItems = () => {
       promoKey: 'crepe',
       price: 150,
       orgaPrice: 100,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -289,7 +261,6 @@ const seedItems = () => {
       promoKey: 'complete',
       price: 200,
       orgaPrice: 150,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -299,7 +270,6 @@ const seedItems = () => {
       promoKey: 'crepe',
       price: 150,
       orgaPrice: 100,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -309,7 +279,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -319,7 +288,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -329,7 +297,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -339,7 +306,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -349,7 +315,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 3,
     },
     {
@@ -359,7 +324,6 @@ const seedItems = () => {
       promoKey: 'croque',
       price: 150,
       orgaPrice: 100,
-      available: 1,
       categoryId: 4,
     },
     {
@@ -369,7 +333,6 @@ const seedItems = () => {
       promoKey: 'croque',
       price: 150,
       orgaPrice: 100,
-      available: 1,
       categoryId: 4,
     },
     {
@@ -379,7 +342,6 @@ const seedItems = () => {
       promoKey: 'croque',
       price: 150,
       orgaPrice: 100,
-      available: 1,
       categoryId: 4,
     },
     {
@@ -389,7 +351,6 @@ const seedItems = () => {
       promoKey: 'croquenut',
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 4,
     },
     {
@@ -399,7 +360,6 @@ const seedItems = () => {
       promoKey: 'pizza',
       price: 450,
       orgaPrice: 350,
-      available: 1,
       categoryId: 5,
     },
     {
@@ -409,7 +369,6 @@ const seedItems = () => {
       promoKey: 'pizza',
       price: 450,
       orgaPrice: 350,
-      available: 1,
       categoryId: 5,
     },
     {
@@ -419,7 +378,6 @@ const seedItems = () => {
       promoKey: 'pizza',
       price: 450,
       orgaPrice: 350,
-      available: 1,
       categoryId: 5,
     },
     {
@@ -429,7 +387,6 @@ const seedItems = () => {
       promoKey: 'pizza',
       price: 450,
       orgaPrice: 350,
-      available: 1,
       categoryId: 5,
     },
     {
@@ -439,7 +396,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 6,
     },
     {
@@ -449,7 +405,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 6,
     },
     {
@@ -459,7 +414,6 @@ const seedItems = () => {
       promoKey: null,
       price: 250,
       orgaPrice: 200,
-      available: 1,
       categoryId: 6,
     },
     {
@@ -469,7 +423,6 @@ const seedItems = () => {
       promoKey: null,
       price: 10000,
       orgaPrice: 10000,
-      available: 1,
       categoryId: 7,
     },
     {
@@ -479,7 +432,6 @@ const seedItems = () => {
       promoKey: null,
       price: 10000,
       orgaPrice: 10000,
-      available: 1,
       categoryId: 7,
     },
     {
@@ -489,7 +441,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 7,
     },
     {
@@ -499,7 +450,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 50,
-      available: 1,
       categoryId: 7,
     },
     {
@@ -509,7 +459,6 @@ const seedItems = () => {
       promoKey: null,
       price: 100,
       orgaPrice: 100,
-      available: 1,
       categoryId: 8,
     },
     {
@@ -519,7 +468,6 @@ const seedItems = () => {
       promoKey: null,
       price: 1500,
       orgaPrice: 1000,
-      available: 1,
       categoryId: 8,
     },
     {
@@ -529,7 +477,6 @@ const seedItems = () => {
       promoKey: null,
       price: 700,
       orgaPrice: 700,
-      available: 1,
       categoryId: 8,
     },
     {
@@ -539,7 +486,6 @@ const seedItems = () => {
       promoKey: null,
       price: 1000,
       orgaPrice: 1000,
-      available: 1,
       categoryId: 8,
     },
     {
@@ -549,13 +495,13 @@ const seedItems = () => {
       promoKey: null,
       price: 500,
       orgaPrice: 500,
-      available: 1,
       categoryId: 8,
     },
   ];
 
   items = items.map((item) => ({
     ...item,
+    available: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
   }));
