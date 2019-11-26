@@ -42,10 +42,16 @@ export interface Promotion extends Price {
   orgaPrice: number;
 }
 
+export enum OrderUpdate {
+  UPGRADE = 1,
+  DOWNGRADE = -1,
+}
+
 export enum Error {
   // 400
   BAD_REQUEST = 'BAD_REQUEST',
   BASKET_EMPTY = 'BASKET_EMPTY',
+  ORDER_PENDING = 'ORDER_PENDING',
   ORDER_FINISHED = 'ORDER_FINISHED',
 
   // 401

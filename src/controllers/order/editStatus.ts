@@ -3,11 +3,10 @@ import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import { noContent, notFound, badRequest, unauthorized } from '../../utils/responses';
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
-import { Status, Permission, Error } from '../../types';
+import { Status, Permission, Error, OrderUpdate } from '../../types';
 
-const upgradeStatus = async (req: Request, res: Response) => {
+const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Response) => {
   try {
-    // todo: mettre de la validation
     const statusOrdered = [Status.PENDING, Status.PREPARING, Status.READY, Status.FINISHED];
 
     const order = await Order.findByPk(req.params.id);
@@ -16,8 +15,12 @@ const upgradeStatus = async (req: Request, res: Response) => {
       return notFound(res, Error.ORDER_NOT_FOUND);
     }
 
-    if (order.status === Status.FINISHED) {
+    if (order.status === Status.FINISHED && orderUpdate === OrderUpdate.UPGRADE) {
       return badRequest(res, Error.ORDER_FINISHED);
+    }
+
+    if (order.status === Status.PENDING && orderUpdate === OrderUpdate.DOWNGRADE) {
+      return badRequest(res, Error.ORDER_PENDING);
     }
 
     // A pizza role can't finish orders
@@ -25,7 +28,7 @@ const upgradeStatus = async (req: Request, res: Response) => {
       return unauthorized(res);
     }
 
-    const newStatus = statusOrdered[statusOrdered.indexOf(order.status) + 1];
+    const newStatus = statusOrdered[statusOrdered.indexOf(order.status) + orderUpdate];
     order.status = newStatus;
 
     await order.save();
@@ -38,4 +41,4 @@ const upgradeStatus = async (req: Request, res: Response) => {
   }
 };
 
-export default upgradeStatus;
+export default editStatus;
