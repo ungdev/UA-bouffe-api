@@ -8,7 +8,6 @@ import { BodyRequest, PaymentMethod, Error, Status } from '../../types';
 import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
-import { computePromotions } from '../../utils/promotions';
 import sendSlackMessage from '../../utils/sendSlackMessage';
 
 interface Body {
@@ -16,18 +15,18 @@ interface Body {
   place: string;
   orgaPrice: boolean;
   orders: Array<number>;
+  total: number;
 }
 
 const create = async (req: BodyRequest<Body>, res: Response) => {
   try {
-    // Orders: [orders ids]
-    const { method, place, orgaPrice, orders } = req.body;
+    // Orders = [orders ids]
+    const { method, place, orgaPrice, orders, total } = req.body;
 
     if (orders.length === 0) {
       return badRequest(res, Error.BASKET_EMPTY);
     }
 
-    // Calculates promotions...
     const itemCatalog = await Item.findAll({
       include: [Category],
       where: {
@@ -41,7 +40,6 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     const status = needPreparation ? Status.PENDING : Status.READY;
 
     const items = orders.map((order) => itemCatalog.find((item) => item.id === order));
-    const promotionComputation = computePromotions(items, orgaPrice);
 
     const orderItems = items.map((item) => ({
       itemId: item.id,
@@ -53,7 +51,8 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         place,
         orderItems,
         status,
-        total: promotionComputation.total,
+        orgaPrice,
+        total,
       },
       {
         include: [OrderItem],
