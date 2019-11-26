@@ -4,8 +4,8 @@ const seedItems = () => {
   let items = [
     {
       id: 1,
-      name: 'Coca-Cola',
-      key: 'cocacola',
+      name: 'Pepsi',
+      key: 'pepsi',
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
@@ -14,8 +14,8 @@ const seedItems = () => {
     },
     {
       id: 2,
-      name: 'Sprite',
-      key: 'sprite',
+      name: 'Pepsi Max',
+      key: 'pepsimax',
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
@@ -24,8 +24,8 @@ const seedItems = () => {
     },
     {
       id: 3,
-      name: 'Coca Cherry',
-      key: 'cocacherry',
+      name: 'Ice Tea Green',
+      key: 'iceteagreen',
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
@@ -34,8 +34,8 @@ const seedItems = () => {
     },
     {
       id: 4,
-      name: 'Coca Zéro',
-      key: 'cocazero',
+      name: 'Ice Tea Pêche',
+      key: 'iceteapeche',
       promoKey: 'canette',
       price: 100,
       orgaPrice: 60,
@@ -54,7 +54,7 @@ const seedItems = () => {
     },
     {
       id: 6,
-      name: 'Schweppes Argrumes',
+      name: 'Schweppes Agrumes',
       key: 'schweppes',
       promoKey: 'canette',
       price: 100,
@@ -64,16 +64,6 @@ const seedItems = () => {
     },
     {
       id: 7,
-      name: 'Ice Tea Pêche',
-      key: 'icetea',
-      promoKey: 'canette',
-      price: 100,
-      orgaPrice: 60,
-      available: 1,
-      categoryId: 1,
-    },
-    {
-      id: 8,
       name: '7Up',
       key: '7up',
       promoKey: 'canette',
@@ -83,7 +73,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 9,
+      id: 8,
       name: 'Fanta Orange',
       key: 'fanta',
       promoKey: 'canette',
@@ -93,7 +83,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 10,
+      id: 9,
       name: 'Oasis Orange',
       key: 'oasisorange',
       promoKey: 'canette',
@@ -103,7 +93,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 11,
+      id: 10,
       name: 'Oasis PCF',
       key: 'oasispcf',
       promoKey: 'canette',
@@ -113,7 +103,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 12,
+      id: 11,
       name: 'Oasis Tropical',
       key: 'oasistropical',
       promoKey: 'canette',
@@ -123,17 +113,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 13,
-      name: 'Dr Pepper',
-      key: 'drpepper',
-      promoKey: 'canette',
-      price: 100,
-      orgaPrice: 60,
-      available: 1,
-      categoryId: 1,
-    },
-    {
-      id: 14,
+      id: 12,
       name: "Bouteille d'eau",
       key: 'eau',
       promoKey: null,
@@ -143,7 +123,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 15,
+      id: 13,
       name: 'Monster Energy',
       key: 'monsterenergy',
       promoKey: null,
@@ -153,7 +133,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 16,
+      id: 14,
       name: 'Monster Assault',
       key: 'monsterassault',
       promoKey: null,
@@ -163,7 +143,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 17,
+      id: 15,
       name: 'Monster Ultra Zéro',
       key: 'monsterzero',
       promoKey: null,
@@ -173,7 +153,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 18,
+      id: 16,
       name: 'Café',
       key: 'cafe',
       promoKey: null,
@@ -183,7 +163,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 19,
+      id: 17,
       name: 'Thé',
       key: 'the',
       promoKey: null,
@@ -193,7 +173,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 20,
+      id: 18,
       name: 'Chocolat',
       key: 'chocolat',
       promoKey: null,
@@ -203,7 +183,7 @@ const seedItems = () => {
       categoryId: 1,
     },
     {
-      id: 21,
+      id: 19,
       name: 'Bounty',
       key: 'bounty',
       promoKey: 'barre',
@@ -213,7 +193,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 22,
+      id: 20,
       name: 'Snickers',
       key: 'snickers',
       promoKey: 'barre',
@@ -223,7 +203,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 23,
+      id: 21,
       name: 'Kinder Bueno',
       key: 'kinder',
       promoKey: 'barre',
@@ -233,7 +213,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 24,
+      id: 22,
       name: 'Kit Kat',
       key: 'kitkat',
       promoKey: 'barre',
@@ -243,7 +223,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 25,
+      id: 23,
       name: 'Twix',
       key: 'twix',
       promoKey: 'barre',
@@ -253,7 +233,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 26,
+      id: 24,
       name: "Pom'potes",
       key: 'pompotes',
       promoKey: null,
@@ -263,7 +243,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 27,
+      id: 25,
       name: 'Bonbons Schtroumpf',
       key: 'schtroumpf',
       promoKey: null,
@@ -273,7 +253,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 28,
+      id: 26,
       name: 'Bonbons Dragibus',
       key: 'dragibus',
       promoKey: null,
@@ -283,7 +263,7 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 29,
+      id: 27,
       name: 'Chips',
       key: 'chips',
       promoKey: null,
@@ -293,47 +273,37 @@ const seedItems = () => {
       categoryId: 2,
     },
     {
-      id: 30,
-      name: 'Saucissons',
-      key: 'saucissons',
-      promoKey: null,
-      price: 150,
-      orgaPrice: 100,
-      available: 0,
-      categoryId: 2,
-    },
-    {
-      id: 31,
+      id: 28,
       name: 'Crêpe Jambon Fromage',
       key: 'crepejambonfromage',
-      promoKey: null,
+      promoKey: 'crepe',
       price: 150,
       orgaPrice: 100,
       available: 1,
       categoryId: 3,
     },
     {
-      id: 32,
-      name: 'Crêpe Complête',
+      id: 29,
+      name: 'Crêpe Complète',
       key: 'crepecomplete',
-      promoKey: null,
+      promoKey: 'complete',
       price: 200,
       orgaPrice: 150,
       available: 1,
       categoryId: 3,
     },
     {
-      id: 33,
+      id: 30,
       name: 'Crêpe Chèvre Miel',
       key: 'crepechevremiel',
-      promoKey: null,
+      promoKey: 'crepe',
       price: 150,
       orgaPrice: 100,
       available: 1,
       categoryId: 3,
     },
     {
-      id: 34,
+      id: 31,
       name: 'Crêpe Fraise',
       key: 'crepefraise',
       promoKey: null,
@@ -343,7 +313,7 @@ const seedItems = () => {
       categoryId: 3,
     },
     {
-      id: 35,
+      id: 32,
       name: 'Crêpe Abricot',
       key: 'crepeabricot',
       promoKey: null,
@@ -353,7 +323,7 @@ const seedItems = () => {
       categoryId: 3,
     },
     {
-      id: 36,
+      id: 33,
       name: 'Crêpe Miel',
       key: 'crepemiel',
       promoKey: null,
@@ -363,7 +333,7 @@ const seedItems = () => {
       categoryId: 3,
     },
     {
-      id: 37,
+      id: 34,
       name: 'Crêpe Sucre',
       key: 'crepecsucre',
       promoKey: null,
@@ -373,7 +343,7 @@ const seedItems = () => {
       categoryId: 3,
     },
     {
-      id: 38,
+      id: 35,
       name: 'Crêpe Nutella',
       key: 'crepenutella',
       promoKey: null,
@@ -383,7 +353,7 @@ const seedItems = () => {
       categoryId: 3,
     },
     {
-      id: 39,
+      id: 36,
       name: 'Croque Jambon Fromage',
       key: 'croquejambonfromage',
       promoKey: 'croque',
@@ -393,7 +363,7 @@ const seedItems = () => {
       categoryId: 4,
     },
     {
-      id: 40,
+      id: 37,
       name: 'Croque 3 Fromages',
       key: 'croque3fromage',
       promoKey: 'croque',
@@ -403,7 +373,7 @@ const seedItems = () => {
       categoryId: 4,
     },
     {
-      id: 41,
+      id: 38,
       name: 'Croque Tomate Mozza',
       key: 'croquetomatemozza',
       promoKey: 'croque',
@@ -413,7 +383,7 @@ const seedItems = () => {
       categoryId: 4,
     },
     {
-      id: 42,
+      id: 39,
       name: 'Croque Nutella',
       key: 'croquenutella',
       promoKey: 'croquenut',
@@ -423,7 +393,7 @@ const seedItems = () => {
       categoryId: 4,
     },
     {
-      id: 43,
+      id: 40,
       name: 'Pizza Jambon Fromage',
       key: 'pizzajambonfromage',
       promoKey: 'pizza',
@@ -433,7 +403,7 @@ const seedItems = () => {
       categoryId: 5,
     },
     {
-      id: 44,
+      id: 41,
       name: 'Pizza Chèvre Lardons',
       key: 'pizzachevrelardons',
       promoKey: 'pizza',
@@ -443,7 +413,7 @@ const seedItems = () => {
       categoryId: 5,
     },
     {
-      id: 45,
+      id: 42,
       name: 'Pizza Royale',
       key: 'pizzaroyale',
       promoKey: 'pizza',
@@ -453,7 +423,7 @@ const seedItems = () => {
       categoryId: 5,
     },
     {
-      id: 46,
+      id: 43,
       name: 'Pizza Chorizo',
       key: 'pizzachorizo',
       promoKey: 'pizza',
@@ -463,7 +433,7 @@ const seedItems = () => {
       categoryId: 5,
     },
     {
-      id: 47,
+      id: 44,
       name: 'Sandwich Végétarien',
       key: 'sandvg',
       promoKey: null,
@@ -473,7 +443,7 @@ const seedItems = () => {
       categoryId: 6,
     },
     {
-      id: 48,
+      id: 45,
       name: 'Sandwich Thon Mayonnaise',
       key: 'sandthonmayo',
       promoKey: null,
@@ -483,7 +453,7 @@ const seedItems = () => {
       categoryId: 6,
     },
     {
-      id: 49,
+      id: 46,
       name: 'Sandwich Jambon Beurre',
       key: 'sandjambonbeurre',
       promoKey: null,
@@ -493,7 +463,27 @@ const seedItems = () => {
       categoryId: 6,
     },
     {
-      id: 50,
+      id: 47,
+      name: 'Pain au Chocolat',
+      key: 'petitpain',
+      promoKey: null,
+      price: 10000,
+      orgaPrice: 10000,
+      available: 1,
+      categoryId: 7,
+    },
+    {
+      id: 48,
+      name: 'Croissant',
+      key: 'croissant',
+      promoKey: null,
+      price: 10000,
+      orgaPrice: 10000,
+      available: 1,
+      categoryId: 7,
+    },
+    {
+      id: 49,
       name: 'Tartine Confiture',
       key: 'tartineconfiture',
       promoKey: null,
@@ -503,7 +493,7 @@ const seedItems = () => {
       categoryId: 7,
     },
     {
-      id: 51,
+      id: 50,
       name: 'Tartine Nutella',
       key: 'tartinenutella',
       promoKey: null,
@@ -513,7 +503,7 @@ const seedItems = () => {
       categoryId: 7,
     },
     {
-      id: 52,
+      id: 51,
       name: "Pin's",
       key: 'pins',
       promoKey: null,
@@ -523,7 +513,7 @@ const seedItems = () => {
       categoryId: 8,
     },
     {
-      id: 53,
+      id: 52,
       name: 'T-shirt',
       key: 'tshirt',
       promoKey: null,
@@ -533,7 +523,7 @@ const seedItems = () => {
       categoryId: 8,
     },
     {
-      id: 54,
+      id: 53,
       name: 'Ethernet 5 mètres',
       key: 'ethernet5',
       promoKey: null,
@@ -543,7 +533,7 @@ const seedItems = () => {
       categoryId: 8,
     },
     {
-      id: 55,
+      id: 54,
       name: 'Ethernet 7 mètres',
       key: 'ethernet7',
       promoKey: null,
@@ -553,7 +543,7 @@ const seedItems = () => {
       categoryId: 8,
     },
     {
-      id: 56,
+      id: 55,
       name: 'Multiprise',
       key: 'multiprise',
       promoKey: null,

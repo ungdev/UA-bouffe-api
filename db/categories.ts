@@ -40,8 +40,8 @@ const seedCategories = () => {
     },
     {
       id: 7,
-      name: 'Tartines',
-      key: 'tartines',
+      name: 'Petit Dej',
+      key: 'dejeuner',
       needsPreparation: 1,
     },
     {
