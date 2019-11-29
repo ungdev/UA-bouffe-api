@@ -9,6 +9,7 @@ import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
 import sendSlackMessage from '../../utils/sendSlackMessage';
+import item from '../item';
 
 interface Body {
   method: PaymentMethod;
@@ -53,6 +54,8 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
     await Promise.all(
       separatedItems.map((items) => {
+        if (items.length === 0) return;
+
         const needPreparation = items.some((item) => item.category.needsPreparation);
         const status = needPreparation ? Status.PENDING : Status.READY;
 
