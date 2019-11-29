@@ -36,27 +36,44 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
       },
     });
 
-    const needPreparation = itemCatalog.some((item) => item.category.needsPreparation);
-    const status = needPreparation ? Status.PENDING : Status.READY;
+    const separatedItems = orders
+      .map((order) => itemCatalog.find((item) => item.id === order))
+      .reduce(
+        (acc, item) => {
+          if (item.category.key !== 'pizzas') {
+            acc[0].push(item);
+          } else {
+            acc[1].push(item);
+          }
 
-    const items = orders.map((order) => itemCatalog.find((item) => item.id === order));
+          return acc;
+        },
+        [[], []],
+      );
 
-    const orderItems = items.map((item) => ({
-      itemId: item.id,
-    }));
+    await Promise.all(
+      separatedItems.map((items) => {
+        const needPreparation = items.some((item) => item.category.needsPreparation);
+        const status = needPreparation ? Status.PENDING : Status.READY;
 
-    await Order.create(
-      {
-        method,
-        place,
-        orderItems,
-        status,
-        orgaPrice,
-        total,
-      },
-      {
-        include: [OrderItem],
-      },
+        const orderItems = items.map((item) => ({
+          itemId: item.id,
+        }));
+
+        return Order.create(
+          {
+            method,
+            place,
+            orderItems,
+            status,
+            orgaPrice,
+            total,
+          },
+          {
+            include: [OrderItem],
+          },
+        );
+      }),
     );
 
     sendSlackMessage();
