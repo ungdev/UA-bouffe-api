@@ -4,12 +4,27 @@ import { noContent, notFound, badRequest, unauthorized } from '../../utils/respo
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
 import { Status, Permission, Error, OrderUpdate } from '../../types';
+import OrderItem from '../../models/orderItem';
+import Item from '../../models/item';
+import Category from '../../models/category';
 
 const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Response) => {
   try {
     const statusOrdered = [Status.PENDING, Status.PREPARING, Status.READY, Status.FINISHED];
 
-    const order = await Order.findByPk(req.params.id);
+    const order = await Order.findByPk(req.params.id, {
+      include: [
+        {
+          model: OrderItem,
+          include: [
+            {
+              model: Item,
+              include: [Category],
+            },
+          ],
+        },
+      ],
+    });
 
     if (!order) {
       return notFound(res, Error.ORDER_NOT_FOUND);
@@ -23,8 +38,9 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
       return badRequest(res, Error.ORDER_PENDING);
     }
 
-    // A pizza role can't finish orders
-    if (req.user.permissions === Permission.PIZZA && order.status === Status.READY) {
+    // A pizza role can't finish orders and only pizzas orders
+    const isPizzaOrder = order.orderItems.every((orderItem) => orderItem.item.category.key === 'pizzas');
+    if (req.user.permissions === Permission.PIZZA && (order.status === Status.READY || !isPizzaOrder)) {
       return unauthorized(res);
     }
 
