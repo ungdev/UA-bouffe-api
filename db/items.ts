@@ -421,8 +421,8 @@ const seedItems = () => {
       name: 'Pain au Chocolat',
       key: 'petitpain',
       promoKey: null,
-      price: 10000,
-      orgaPrice: 10000,
+      price: 100,
+      orgaPrice: 60,
       categoryId: 7,
     },
     {
@@ -430,8 +430,8 @@ const seedItems = () => {
       name: 'Croissant',
       key: 'croissant',
       promoKey: null,
-      price: 10000,
-      orgaPrice: 10000,
+      price: 100,
+      orgaPrice: 60,
       categoryId: 7,
     },
     {
