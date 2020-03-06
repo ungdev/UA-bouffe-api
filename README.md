@@ -35,8 +35,14 @@ yarn build
 yarn start
 ```
 
-### Pourquoi ne pas utiliser Socket.io
-On peut voir dans les commits précédents que socket.io est utilisé et fonctionnel. Mais malheuresement, la mise en production s'est révélée très compliquée. Impossible de créer une connexion (400 handshake errors). Il a fallu donc l'abandonner pour une solution beaucoup plus bourinne.
+### Utilisation de TravisCI
+TravisCI est un outil d'automatisation et de déploiement.
+
+A chaque push sur master, TravisCI lint le code, le build et trigger okd pour déployer le code en production ainsi que Slack pour notifier l'avancée de la vérification
+Il se passe en moyenne 5 minutes entre un push et un déploiement
+
+### Diagramme de séquence lors d'une commande
+![Diagramme de séquence](./docs/sequence.svg)
 
 ### Licence
 Le code est sous licence MIT.
