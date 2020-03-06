@@ -16,7 +16,7 @@ import devEnv from './utils/devEnv';
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, { pingInterval: 2000, pingTimeout: 5000 });
 
 config();
 
