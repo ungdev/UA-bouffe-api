@@ -32,7 +32,7 @@ config();
 
   app.use(
     morgan(':ip - :username - [:date[clf]] :method :status :url - :response-time ms', {
-      stream: fs.createWriteStream(`${process.env.APP_PATH_LOGS}/access.log`, { flags: 'a' }),
+      stream: fs.createWriteStream(`logs/access.log`, { flags: 'a' }),
       skip: (req) => req.method === 'OPTIONS' || req.method === 'GET',
     }),
   );
