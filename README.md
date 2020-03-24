@@ -1,7 +1,9 @@
 
 # UA Bouffe API
-![travis](https://travis-ci.org/ungdev/UA-bouffe-api.svg?branch=master)
+[![Build Status](https://travis-ci.org/ungdev/UA-bouffe-api.svg?branch=master)](https://travis-ci.org/ungdev/UA-bouffe-api)
+
 API du microservice [UA Bouffe](https://github.com/ungdev/UA-bouffe)
+
 ## Installation
 ### Prérequis
 - NodeJS
