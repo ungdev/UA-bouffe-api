@@ -4,6 +4,7 @@ import OrderItem from './orderItem';
 
 @Table({
   tableName: 'orders',
+  paranoid: true,
 })
 export default class Order extends Model<Order> {
   @AllowNull(false)

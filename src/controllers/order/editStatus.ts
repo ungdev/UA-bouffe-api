@@ -30,18 +30,31 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
       return notFound(res, Error.ORDER_NOT_FOUND);
     }
 
+    // You can't upgrade an order already finished
     if (order.status === Status.FINISHED && orderUpdate === OrderUpdate.UPGRADE) {
       return badRequest(res, Error.ORDER_FINISHED);
     }
 
+    // Deletes the orders if the usesr has the right to
     if (order.status === Status.PENDING && orderUpdate === OrderUpdate.DOWNGRADE) {
-      return badRequest(res, Error.ORDER_PENDING);
+      if (req.user.permissions === Permission.ADMIN) {
+        // Even if the foreign key is in cascade, as it is soft delete, you have to delete manually
+        await OrderItem.destroy({ where: { orderId: order.id } });
+        await order.destroy();
+
+        notifyOrdersUpdated(req.app.locals.io);
+        return noContent(res);
+      }
+
+      return unauthorized(res);
     }
 
     // A pizza role can't finish orders and only pizzas orders
     const isPizzaOrder = order.orderItems.every((orderItem) => orderItem.item.category.key === 'pizzas');
-    if (req.user.permissions === Permission.PIZZA && (order.status === Status.READY || !isPizzaOrder)) {
-      return unauthorized(res);
+    if (req.user.permissions === Permission.PIZZA) {
+      if ((order.status === Status.READY && orderUpdate === OrderUpdate.UPGRADE) || !isPizzaOrder) {
+        return unauthorized(res);
+      }
     }
 
     const newStatus = statusOrdered[statusOrdered.indexOf(order.status) + orderUpdate];

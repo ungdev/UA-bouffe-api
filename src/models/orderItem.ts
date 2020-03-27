@@ -4,6 +4,7 @@ import Item from './item';
 
 @Table({
   tableName: 'orderitems',
+  paranoid: true,
 })
 export default class OrderItem extends Model<OrderItem> {
   @ForeignKey(() => Order)
