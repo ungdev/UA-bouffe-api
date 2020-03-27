@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import database from '../src/database';
 import seedCategories from './categories';
 import seedItems from './items';
-import seedUsers from './users';
 
 dotenv.config();
 
@@ -13,7 +12,6 @@ dotenv.config();
 
   await seedCategories();
   await seedItems();
-  await seedUsers();
 
   sequelize.close();
 })();

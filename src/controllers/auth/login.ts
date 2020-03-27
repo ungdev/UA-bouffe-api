@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
 import { unauthenticated, success } from '../../utils/responses';
 import generateToken from '../../utils/generateToken';
-import User from '../../models/user';
 import { Error } from '../../types';
+import users from '../../utils/users';
 import errorHandler from '../../utils/errorHandler';
 
 export default () => async (req: Request, res: Response) => {
   try {
     const { pin } = req.body;
-
-    const users = await User.findAll();
 
     const user = users.find((_user) => pin === process.env[`APP_PIN_${_user.key.toUpperCase()}`]);
 
