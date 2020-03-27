@@ -10,7 +10,6 @@ import bodyParser from 'body-parser';
 import database from './database';
 import { notFound } from './utils/responses';
 import routes from './controllers';
-import restricLocalIP from './middlewares/restricLocalIP';
 import log from './utils/log';
 import devEnv from './utils/devEnv';
 
@@ -43,7 +42,6 @@ config();
 
   if (devEnv()) app.use(bodyParser.urlencoded({ extended: true })); // For postman
 
-  app.use(restricLocalIP());
   app.use(routes());
 
   app.use((req: Request, res: Response) => notFound(res));
