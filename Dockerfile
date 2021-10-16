@@ -18,9 +18,6 @@ COPY --chown=node:node ./ ./
 # Build api
 RUN yarn build
 
-# Build database seeds
-RUN yarn build --project db
-
 # Prunes devDependencies
 RUN yarn install --production --ignore-scripts --prefer-offline
 

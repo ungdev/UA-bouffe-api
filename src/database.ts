@@ -1,9 +1,8 @@
 import path from 'path';
 import { Sequelize } from 'sequelize-typescript';
 import log from './utils/log';
-import devEnv from './utils/devEnv';
 
-export default async (_forceSync = false) => {
+export default async () => {
   let sequelize: Sequelize;
 
   try {
@@ -30,18 +29,6 @@ export default async (_forceSync = false) => {
     }
   });
 
-  if (_forceSync && !devEnv()) {
-    log.error('You must set your NODE_ENV to development to force sync the database');
-    process.exit(1);
-  }
-
-  const forceSync = _forceSync && devEnv();
-
-  if (forceSync) {
-    log.warn('Database synced with force. Be careful...');
-  }
-
-  await sequelize.sync({ force: forceSync });
   log.info('Connected to database');
 
   return { sequelize };

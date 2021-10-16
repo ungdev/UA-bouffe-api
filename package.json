@@ -47,8 +47,6 @@
     "build": "tsc",
     "start": "node build/server.js",
     "dev": "ts-node-dev --no-notify src/server.ts",
-    "seed": "ts-node-dev --no-notify -T db/seed.ts",
-    "seed:force": "ts-node-dev --no-notify -T db/seed.ts --force-sync",
     "lint": "eslint src/ --ext .ts",
     "lint-fix": "eslint --fix src/ --ext .ts"
   }
