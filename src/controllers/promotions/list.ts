@@ -5,7 +5,7 @@ import { getPromotions } from '../../utils/promotions';
 
 export default async (req: Request, res: Response) => {
   try {
-    const categories = getPromotions();
+    const categories = await getPromotions();
 
     return success(res, categories);
   } catch (err) {
