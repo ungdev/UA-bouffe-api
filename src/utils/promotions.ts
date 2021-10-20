@@ -5,8 +5,9 @@ export const getPromotions = () =>
   PersistantPromotion.findAll({
     attributes: ['key', 'name', 'price', 'orgaPrice', 'formula'],
   }).then((promotions) =>
-    promotions.map<Promotion>((promotion) => ({
-      ...promotion,
-      formula: promotion.formula.split('|'),
-    })),
+    promotions.map<Promotion>((promotion) =>
+      Object.assign(promotion, {
+        formula: promotion.formula.split('|'),
+      }),
+    ),
   );
