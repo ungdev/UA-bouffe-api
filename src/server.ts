@@ -15,7 +15,13 @@ import devEnv from './utils/devEnv';
 
 const app = express();
 const server = http.createServer(app);
-const io = new SockerServer(server, { pingInterval: 2000, pingTimeout: 5000 });
+const io = new SockerServer(server, {
+  pingInterval: 2000,
+  pingTimeout: 5000,
+  cors: {
+    origin: '*',
+  },
+});
 
 config();
 
