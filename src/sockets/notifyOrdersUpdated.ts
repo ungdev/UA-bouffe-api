@@ -1,6 +1,6 @@
+import SocketIO from 'socket.io';
 import getCurrentOrders from '../utils/orders';
 import log from '../utils/log';
-import SocketIO from 'socket.io';
 
 const notifyOrdersUpdated = async (io: SocketIO.Server) => {
   const orders = await getCurrentOrders();

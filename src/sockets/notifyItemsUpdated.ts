@@ -1,6 +1,6 @@
+import SocketIO from 'socket.io';
 import getCategories from '../utils/categories';
 import log from '../utils/log';
-import SocketIO from 'socket.io';
 
 const notifyItemsUpdated = async (io: SocketIO.Server) => {
   const categories = await getCategories();

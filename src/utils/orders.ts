@@ -4,8 +4,8 @@ import OrderItem from '../models/orderItem';
 import Item from '../models/item';
 import Category from '../models/category';
 
-const getCurrentOrders = () => {
-  return Order.findAll({
+const getCurrentOrders = () =>
+  Order.findAll({
     attributes: ['id', 'place', 'status', 'method', 'createdAt'],
     include: [
       {
@@ -31,6 +31,5 @@ const getCurrentOrders = () => {
       },
     },
   });
-};
 
 export default getCurrentOrders;
