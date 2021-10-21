@@ -58,9 +58,12 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         const needPreparation = items.some((item) => item.category.needsPreparation);
         const status = needPreparation ? Status.PENDING : Status.READY;
 
-        const orderItems = items.map((item) => ({
-          itemId: item.id,
-        }));
+        const orderItems = items.map(
+          (item) =>
+            ({
+              itemId: item.id,
+            } as OrderItem),
+        );
 
         return Order.create(
           {
@@ -70,7 +73,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
             status,
             orgaPrice,
             total,
-          },
+          } as Order,
           {
             include: [OrderItem],
           },

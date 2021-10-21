@@ -1,5 +1,4 @@
-# Use NodeJS 13 as typescript (and ts-node) won't work with node 16
-FROM node:13
+FROM node:16
 
 ENV NODE_ENV=production
 WORKDIR /srv/app
