@@ -8,8 +8,10 @@
     "target": "es6",
     "strict": true,
     "strictNullChecks": false,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "useUnknownInCatchVariables": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

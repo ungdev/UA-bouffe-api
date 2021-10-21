@@ -1,18 +1,13 @@
 import { Promotion } from '../types';
+import PersistantPromotion from '../models/promotion';
 
-export const getPromotions = (): Array<Promotion> => [
-  {
-    formula: ['croque', 'croque', 'croque'],
-    orgaPrice: 250,
-    price: 250,
-    name: 'Promo 3 Croques',
-    key: 'croque',
-  },
-  {
-    formula: ['crepe', 'crepe', 'crepe'],
-    orgaPrice: 100,
-    price: 100,
-    name: 'Promo 3 Crepes',
-    key: 'crepe',
-  }
-];
+export const getPromotions = () =>
+  PersistantPromotion.findAll({
+    attributes: ['key', 'name', 'price', 'orgaPrice', 'formula'],
+  }).then((promotions) =>
+    promotions.map<Promotion>((promotion) =>
+      Object.assign(promotion, {
+        formula: promotion.formula.split('|'),
+      }),
+    ),
+  );

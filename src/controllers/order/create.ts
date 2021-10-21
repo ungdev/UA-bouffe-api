@@ -53,14 +53,17 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
     await Promise.all(
       separatedItems.map((items) => {
-        if (items.length === 0) return new Promise((resolve) => resolve());
+        if (items.length === 0) return Promise.resolve(null);
 
         const needPreparation = items.some((item) => item.category.needsPreparation);
         const status = needPreparation ? Status.PENDING : Status.READY;
 
-        const orderItems = items.map((item) => ({
-          itemId: item.id,
-        }));
+        const orderItems = items.map(
+          (item) =>
+            ({
+              itemId: item.id,
+            } as OrderItem),
+        );
 
         return Order.create(
           {
@@ -70,7 +73,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
             status,
             orgaPrice,
             total,
-          },
+          } as Order,
           {
             include: [OrderItem],
           },

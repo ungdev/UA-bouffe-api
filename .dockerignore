@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# production
+/build
+yarn-error.log
+
+# misc
+.DS_Store
+.env
+
+.git
+.gitignore
+.github
+
+# IDE
+.vscode/
+.idea/
+
+# Configs
+.prettierrc
+.eslintrc.json
+.editorconfig

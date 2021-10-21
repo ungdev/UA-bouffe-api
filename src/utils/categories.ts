@@ -1,8 +1,8 @@
 import Category from '../models/category';
 import Item from '../models/item';
 
-const getCategories = () => {
-  return Category.findAll({
+const getCategories = () =>
+  Category.findAll({
     attributes: ['id', 'name', 'key', 'needsPreparation'],
     include: [
       {
@@ -11,6 +11,5 @@ const getCategories = () => {
       },
     ],
   });
-};
 
 export default getCategories;

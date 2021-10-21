@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Request } from 'express';
 /**
  * DISCLAMER: Dans mode développement, la modification de ce fichier ne sera peut-être pas prise en compte par le serveur de dev
@@ -16,16 +17,16 @@ export enum PaymentMethod {
   Cash = 'cash',
 }
 
-export interface Token {
-  name: string;
-  key: string;
-  permissions: Permission;
-}
-
 export enum Permission {
   ADMIN = 'admin',
   SELLER = 'seller',
   PIZZA = 'pizza',
+}
+
+export interface Token {
+  name: string;
+  key: string;
+  permissions: Permission;
 }
 
 // This interface is also used in Items

@@ -1,3 +1,4 @@
+import SocketIO from 'socket.io';
 import getCurrentOrders from '../utils/orders';
 import log from '../utils/log';
 

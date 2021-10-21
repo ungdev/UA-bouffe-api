@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
-import socketio from 'socket.io';
+import { Server as SockerServer } from 'socket.io';
 import fs from 'fs';
 import { config } from 'dotenv';
 import morgan from 'morgan';
@@ -15,7 +15,13 @@ import devEnv from './utils/devEnv';
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server, { pingInterval: 2000, pingTimeout: 5000 });
+const io = new SockerServer(server, {
+  pingInterval: 2000,
+  pingTimeout: 5000,
+  cors: {
+    origin: '*',
+  },
+});
 
 config();
 
@@ -26,8 +32,8 @@ config();
 
   app.use(morgan(devEnv() ? 'dev' : 'combined'));
 
-  morgan.token('username', (req) => (req.user ? req.user.key : 'anonymous'));
-  morgan.token('ip', (req) => req.header('x-forwarded-for') || req.connection.remoteAddress);
+  morgan.token('username', (req: Request) => (req.user ? req.user.key : 'anonymous'));
+  morgan.token('ip', (req: Request) => req.header('x-forwarded-for') || req.connection.remoteAddress);
 
   app.use(
     morgan(':ip - :username - [:date[clf]] :method :status :url - :response-time ms', {

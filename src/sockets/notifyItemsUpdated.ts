@@ -1,3 +1,4 @@
+import SocketIO from 'socket.io';
 import getCategories from '../utils/categories';
 import log from '../utils/log';
 
