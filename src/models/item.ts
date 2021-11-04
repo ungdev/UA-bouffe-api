@@ -1,6 +1,7 @@
-import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo, Unique } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo, Unique, BelongsToMany } from 'sequelize-typescript';
 import Category from './category';
 import { Price } from '../types';
+import Supplement from './supplement';
 
 @Table({
   tableName: 'items',
@@ -38,4 +39,13 @@ export default class Item extends Model<Item> implements Price {
 
   @BelongsTo(() => Category)
   public category: Category;
+
+  @BelongsToMany(() => Supplement, {
+    through: 'itemsupplements',
+    foreignKey: 'itemKey',
+    sourceKey: 'key',
+    otherKey: 'supplementKey',
+    targetKey: 'key',
+  })
+  public supplements: Supplement[];
 }

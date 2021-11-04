@@ -9,12 +9,17 @@ import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
 import sendSlackMessage from '../../utils/sendSlackMessage';
+import Supplement from '../../models/supplement';
+import OrderSupplement from '../../models/orderSupplement';
 
 interface Body {
   method: PaymentMethod;
   place: string;
   orgaPrice: boolean;
-  orders: Array<number>;
+  orders: Array<{
+    item: number;
+    supplements: number[];
+  }>;
   total: number;
 }
 
@@ -28,19 +33,29 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
     }
 
     const itemCatalog = await Item.findAll({
-      include: [Category],
+      include: [Category, Supplement],
+      attributes: ['id'],
       where: {
         id: {
-          [Op.in]: orders,
+          [Op.in]: orders.map((order) => order.item),
         },
       },
     });
 
     const separatedItems = orders
-      .map((order) => itemCatalog.find((item) => item.id === order))
+      .map(({ item: itemId, supplements }) => {
+        const item = itemCatalog.find((catalogItem) => catalogItem.id === itemId);
+        return {
+          item,
+          supplements:
+            supplements?.map?.((supplementId) =>
+              item.supplements.find((supplement) => supplement.id === supplementId),
+            ) ?? ([] as Supplement[]),
+        };
+      })
       .reduce(
         (acc, item) => {
-          if (item.category.key !== 'pizzas') {
+          if (item.item.category.key !== 'pizzas') {
             acc[0].push(item);
           } else {
             acc[1].push(item);
@@ -48,20 +63,30 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
           return acc;
         },
-        [[], []],
+        [[], []] as [
+          {
+            item: Partial<Item>;
+            supplements: Supplement[];
+          }[],
+          {
+            item: Partial<Item>;
+            supplements: Supplement[];
+          }[],
+        ],
       );
 
     await Promise.all(
       separatedItems.map((items) => {
         if (items.length === 0) return Promise.resolve(null);
 
-        const needPreparation = items.some((item) => item.category.needsPreparation);
+        const needPreparation = items.some((entry) => entry.item.category.needsPreparation);
         const status = needPreparation ? Status.PENDING : Status.READY;
 
         const orderItems = items.map(
-          (item) =>
+          (entry) =>
             ({
-              itemId: item.id,
+              itemId: entry.item.id,
+              supplements: entry.supplements.map((supplement) => ({ supplementId: supplement.id })),
             } as OrderItem),
         );
 
@@ -75,7 +100,17 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
             total,
           } as Order,
           {
-            include: [OrderItem],
+            include: [
+              {
+                model: OrderItem,
+                include: [
+                  {
+                    model: OrderSupplement,
+                    include: [Supplement],
+                  },
+                ],
+              },
+            ],
           },
         );
       }),

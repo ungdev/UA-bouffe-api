@@ -1,6 +1,7 @@
-import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import Order from './order';
 import Item from './item';
+import OrderSupplement from './orderSupplement';
 
 @Table({
   tableName: 'orderitems',
@@ -22,4 +23,7 @@ export default class OrderItem extends Model<OrderItem> {
 
   @BelongsTo(() => Item)
   public item: Item;
+
+  @HasMany(() => OrderSupplement)
+  public supplements: OrderSupplement[];
 }
