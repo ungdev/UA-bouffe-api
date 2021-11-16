@@ -15,6 +15,7 @@ export enum Status {
 export enum PaymentMethod {
   Card = 'card',
   Cash = 'cash',
+  Ticket = 'ticket',
 }
 
 export enum Permission {

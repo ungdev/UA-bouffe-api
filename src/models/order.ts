@@ -17,7 +17,7 @@ export default class Order extends Model<Order> {
   public status: Status;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('card', 'cash'))
+  @Column(DataType.ENUM('card', 'cash', 'ticket'))
   public method!: PaymentMethod;
 
   @AllowNull(false)
