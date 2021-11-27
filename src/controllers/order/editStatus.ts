@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import axios from 'axios';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import { noContent, notFound, badRequest, unauthorized } from '../../utils/responses';
 import Order from '../../models/order';
@@ -7,6 +8,27 @@ import { Status, Permission, Error, OrderUpdate } from '../../types';
 import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
+
+const sendOrderToDiscordApi = async (order: Order) => {
+  const token = process.env.DISCORD_API_PRIVATE_KEY;
+
+  try {
+    await axios.post(
+      `https://bouffe-discord.ua.uttnetgroup.fr/sendMessageToDiscord`,
+      {
+        order,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.warn('Error while sending message to bouffe-discord', error);
+  }
+};
 
 const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Response) => {
   try {
@@ -61,6 +83,8 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
     order.status = newStatus;
 
     await order.save();
+
+    sendOrderToDiscordApi(order);
 
     notifyOrdersUpdated(req.app.locals.io);
 
