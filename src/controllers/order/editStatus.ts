@@ -8,9 +8,12 @@ import { Status, Permission, Error, OrderUpdate } from '../../types';
 import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
+import log from '../../utils/log';
 
 const sendOrderToDiscordApi = async (order: Order) => {
   const token = process.env.DISCORD_API_PRIVATE_KEY;
+  log.info('Sending order to discord...');
+  log.info(order);
 
   try {
     await axios.post(
@@ -24,9 +27,9 @@ const sendOrderToDiscordApi = async (order: Order) => {
         },
       },
     );
+    log.info('SENT !');
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn('Error while sending message to bouffe-discord', error);
+    log.warn('Error while sending message to bouffe-discord', error);
   }
 };
 
