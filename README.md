@@ -37,11 +37,11 @@ yarn build
 yarn start
 ```
 
-### Utilisation de TravisCI
-TravisCI est un outil d'automatisation et de déploiement.
+### CI/CD
+La pipeline de CI/CD est assurée par GitHub Actions.
 
-A chaque push sur master, TravisCI lint le code, le build et trigger okd pour déployer le code en production ainsi que Slack pour notifier l'avancée de la vérification
-Il se passe en moyenne 5 minutes entre un push et un déploiement
+A chaque push sur master, GitHub Action lint le code, le build et trigger okd pour déployer le code en production ainsi que Slack pour notifier l'avancée de la vérification
+Il se passe en moyenne 5 minutes entre un push et un déploiement.
 
 ### Diagramme de séquence lors d'une commande
 ![Diagramme de séquence](./docs/sequence.svg)
