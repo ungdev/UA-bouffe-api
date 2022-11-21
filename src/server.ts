@@ -12,6 +12,7 @@ import { notFound } from './utils/responses';
 import routes from './controllers';
 import log from './utils/log';
 import devEnv from './utils/devEnv';
+import { monitorInternetConnection } from './sockets/notifyNetworkStatus';
 
 const app = express();
 const server = http.createServer(app);
@@ -56,4 +57,6 @@ config();
     log.info(`Node environment: ${process.env.NODE_ENV}`);
     log.info(`Listening on ${process.env.APP_PORT}...`);
   });
+
+  monitorInternetConnection(io);
 })();

@@ -1,6 +1,6 @@
 
 # UA Bouffe API
-[![Build Status](https://travis-ci.org/ungdev/UA-bouffe-api.svg?branch=master)](https://travis-ci.org/ungdev/UA-bouffe-api)
+[![Build status](https://github.com/ungdev/UA-bouffe-api/actions/workflows/ci.yml/badge.svg)](https://github.com/ungdev/UA-bouffe-api/actions/workflows/ci.yml)
 
 API du microservice [UA Bouffe](https://github.com/ungdev/UA-bouffe)
 

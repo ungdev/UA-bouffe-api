@@ -11,6 +11,7 @@ import Category from '../../models/category';
 import sendSlackMessage from '../../utils/sendSlackMessage';
 import Supplement from '../../models/supplement';
 import OrderSupplement from '../../models/orderSupplement';
+import Transaction from '../../models/transaction';
 
 interface Body {
   method: PaymentMethod;
@@ -92,15 +93,20 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
 
         return Order.create(
           {
-            method,
             place,
             orderItems,
             status,
             orgaPrice,
-            total,
+            transactions: [
+              {
+                amount: total,
+                method,
+              },
+            ],
           } as Order,
           {
             include: [
+              { model: Transaction },
               {
                 model: OrderItem,
                 include: [

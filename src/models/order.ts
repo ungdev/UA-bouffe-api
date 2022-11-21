@@ -1,6 +1,7 @@
 import { Table, Column, Model, HasMany, AllowNull, DataType, Default } from 'sequelize-typescript';
-import { Status, PaymentMethod } from '../types';
+import { Status } from '../types';
 import OrderItem from './orderItem';
+import Transaction from './transaction';
 
 @Table({
   tableName: 'orders',
@@ -17,16 +18,11 @@ export default class Order extends Model<Order> {
   public status: Status;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('card', 'cash', 'ticket'))
-  public method!: PaymentMethod;
-
-  @AllowNull(false)
   @Column
   public orgaPrice: boolean;
 
-  @AllowNull(false)
-  @Column
-  public total: number;
+  @HasMany(() => Transaction)
+  public transactions: Transaction[];
 
   @HasMany(() => OrderItem)
   public orderItems: OrderItem[];

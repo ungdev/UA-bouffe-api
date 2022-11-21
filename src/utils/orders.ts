@@ -8,7 +8,7 @@ import OrderSupplement from '../models/orderSupplement';
 
 const getCurrentOrders = () =>
   Order.findAll({
-    attributes: ['id', 'place', 'status', 'method', 'createdAt'],
+    attributes: ['id', 'place', 'status', 'createdAt'],
     include: [
       {
         model: OrderItem,

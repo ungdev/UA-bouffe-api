@@ -4,6 +4,7 @@ import generateToken from '../../utils/generateToken';
 import { Token } from '../../types';
 import { success } from '../../utils/responses';
 import errorHandler from '../../utils/errorHandler';
+import { getCurrentInternetStatus } from '../../sockets/notifyNetworkStatus';
 
 export default () => (req: Request, res: Response) => {
   try {
@@ -15,6 +16,7 @@ export default () => (req: Request, res: Response) => {
       token: generateToken(decoded.name, decoded.key, decoded.permissions),
       name: decoded.name,
       key: decoded.key,
+      isOnline: getCurrentInternetStatus(),
     });
   } catch (err) {
     return errorHandler(res, err);
