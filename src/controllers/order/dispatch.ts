@@ -12,7 +12,7 @@ import OrderSupplement from '../../models/orderSupplement';
 import Transaction from '../../models/transaction';
 import type { BuckResponse, OrderData } from '../../middlewares/isBuck';
 
-const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<any, OrderData>) => {
+const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, OrderData>) => {
   try {
     const { payment, orgaPrice, items, place } = res.locals;
 
@@ -29,13 +29,13 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<any, Order
     );
 
     await Promise.all(
-      separatedItems.map((items) => {
-        if (items.length === 0) return Promise.resolve(null);
+      separatedItems.map((itemList) => {
+        if (itemList.length === 0) return Promise.resolve(null);
 
-        const needPreparation = items.some((entry) => entry.category.needsPreparation);
+        const needPreparation = itemList.some((entry) => entry.category.needsPreparation);
         const status = needPreparation ? Status.PENDING : Status.READY;
 
-        const orderItems = items.map(
+        const orderItems = itemList.map(
           (entry) =>
             ({
               itemId: entry.id,

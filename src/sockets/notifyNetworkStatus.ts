@@ -1,10 +1,15 @@
 import SocketIO from 'socket.io';
 import { lookup } from 'dns/promises';
-import log from '../utils/log';
 import { setTimeout } from 'timers/promises';
+import log from '../utils/log';
 
 let isOnline = false;
 let currentTimeout: AbortController;
+
+const notifyNetworkStatusChanged = async (io: SocketIO.Server, online: boolean) => {
+  log.info('Socket emit: networkStatus');
+  io.sockets.emit('networkStatus', { online });
+};
 
 const hasInternet = async () => {
   try {
@@ -21,6 +26,7 @@ const runInternetCheck = async (io: SocketIO.Server) => {
     isOnline = online;
     return notifyNetworkStatusChanged(io, isOnline);
   }
+  return null;
 };
 
 export const monitorInternetConnection = async (io: SocketIO.Server): Promise<void> => {
@@ -30,7 +36,9 @@ export const monitorInternetConnection = async (io: SocketIO.Server): Promise<vo
     await setTimeout(Number(process.env.INTERNET_CHECK_TIMEOUT) || 30000, null, currentTimeout);
     await runInternetCheck(io);
     return monitorInternetConnection(io);
-  } catch {}
+  } catch {
+    return null;
+  }
 };
 
 export const notifyRequestReceived = (io: SocketIO.Server) => {
@@ -43,10 +51,8 @@ export const notifyRequestReceived = (io: SocketIO.Server) => {
 
 export const getCurrentInternetStatus = () => isOnline;
 
-const notifyNetworkStatusChanged = async (io: SocketIO.Server, online: boolean) => {
-  log.info('Socket emit: networkStatus');
-  io.sockets.emit('networkStatus', { online });
-};
-
 // Initialize value
-hasInternet().then((value) => (isOnline = value));
+hasInternet().then((value) => {
+  isOnline = value;
+});
+

@@ -1,27 +1,10 @@
-import { Response, NextFunction, Request, response } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import { unauthorized } from '../utils/responses';
 import errorHandler from '../utils/errorHandler';
 import { PaymentMethod } from '../types';
 import { toTurbo } from '../utils/turbobuck';
 import Item from '../models/item';
 import { notifyRequestReceived } from '../sockets/notifyNetworkStatus';
-
-export interface BuckResponse {
-  event: 'basketCreated';
-  id: string;
-  payload: BuckPayload;
-}
-
-export interface BuckPayload {
-  date: string;
-  entries: BuckEntry[];
-  deviceId: string;
-  payments: BuckPayment[];
-  sellerUserId: string;
-  pointOfSaleId: string;
-  sellerWalletId: string;
-  orderIdentifier: string;
-}
 
 export interface BuckEntry {
   id: string;
@@ -44,6 +27,23 @@ export interface BuckPayment {
   neptingTransactionId?: string;
 }
 
+export interface BuckPayload {
+  date: string;
+  entries: BuckEntry[];
+  deviceId: string;
+  payments: BuckPayment[];
+  sellerUserId: string;
+  pointOfSaleId: string;
+  sellerWalletId: string;
+  orderIdentifier: string;
+}
+
+export interface BuckResponse {
+  event: 'basketCreated';
+  id: string;
+  payload: BuckPayload;
+}
+
 export type OrderData = {
   items: Partial<Item>[];
   orgaPrice: boolean;
@@ -54,7 +54,11 @@ export type OrderData = {
   place: string;
 };
 
-export default async (req: Request<any, any, BuckResponse>, res: Response<any, OrderData>, next: NextFunction) => {
+export default async (
+  req: Request<unknown, unknown, BuckResponse>,
+  res: Response<unknown, OrderData>,
+  next: NextFunction,
+) => {
   try {
     const { event, id, payload } = req.body;
 
@@ -71,13 +75,13 @@ export default async (req: Request<any, any, BuckResponse>, res: Response<any, O
         amount: -payment.amount,
       }));
       res.locals.items = await Promise.all(
-        payload.entries.map((entry) => toTurbo(entry.articleId).then((entry) => entry.item)),
+        payload.entries.map((entry) => toTurbo(entry.articleId).then((turboEntry) => turboEntry.item)),
       );
       res.locals.place = payload.orderIdentifier;
       const orgaPrices = (
         await Promise.all(
           payload.entries.map(async (entry) => {
-            const orgaPriceId = (await toTurbo(entry.id)).orgaPriceId;
+            const { orgaPriceId } = await toTurbo(entry.id);
             if (orgaPriceId !== null) return orgaPriceId === entry.priceId;
             return null;
           }),
@@ -86,7 +90,7 @@ export default async (req: Request<any, any, BuckResponse>, res: Response<any, O
       if (orgaPrices.length < 1) orgaPrices[0] = false;
       // Check that all items have orgaPrice (or none)
       if (orgaPrices.some((price) => price !== orgaPrices[0])) return unauthorized(res);
-      res.locals.orgaPrice = orgaPrices[0];
+      [res.locals.orgaPrice] = orgaPrices;
       return next();
     }
     return unauthorized(res);
