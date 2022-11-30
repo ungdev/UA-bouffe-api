@@ -1,10 +1,11 @@
 import { Response, NextFunction, Request } from 'express';
-import { unauthorized } from '../utils/responses';
+import { notModified, unauthorized } from '../utils/responses';
 import errorHandler from '../utils/errorHandler';
 import { PaymentMethod } from '../types';
 import { toTurbo } from '../utils/turbobuck';
 import Item from '../models/item';
 import { notifyRequestReceived } from '../sockets/notifyNetworkStatus';
+import Order from '../models/order';
 
 export interface BuckEntry {
   id: string;
@@ -91,6 +92,15 @@ export default async (
       // Check that all items have orgaPrice (or none)
       if (orgaPrices.some((price) => price !== orgaPrices[0])) return unauthorized(res);
       [res.locals.orgaPrice] = orgaPrices;
+
+      if (
+        Order.findOne({
+          where: {
+            buckId: id,
+          },
+        }) != null
+      )
+        return notModified(res);
       return next();
     }
     return unauthorized(res);
@@ -98,3 +108,4 @@ export default async (
     return errorHandler(res, err);
   }
 };
+

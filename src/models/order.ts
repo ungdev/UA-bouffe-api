@@ -26,4 +26,7 @@ export default class Order extends Model<Order> {
 
   @HasMany(() => OrderItem)
   public orderItems: OrderItem[];
+
+  @Column
+  public buckId: string;
 }

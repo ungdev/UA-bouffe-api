@@ -1,24 +1,19 @@
 import { Response } from 'express';
 import { Error } from '../types';
 
-const success = (res: Response, body: object) =>
-  res
-    .status(200)
-    .json(body)
-    .end();
+const success = (res: Response, body: object) => res.status(200).json(body).end();
 
 const created = (res: Response, body?: object) => {
   if (body) {
-    return res
-      .status(201)
-      .json(body)
-      .end();
+    return res.status(201).json(body).end();
   }
 
   return res.status(201).end();
 };
 
 const noContent = (res: Response) => res.status(204).end();
+
+const notModified = (res: Response) => res.status(304).send();
 
 const badRequest = (res: Response, type?: Error) =>
   res
@@ -44,4 +39,5 @@ const notFound = (res: Response, type?: Error) =>
     .json({ error: type || Error.NOT_FOUND })
     .end();
 
-export { success, created, noContent, badRequest, unauthenticated, unauthorized, notFound };
+export { success, created, noContent, badRequest, unauthenticated, unauthorized, notFound, notModified };
+
