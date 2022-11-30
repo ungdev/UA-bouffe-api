@@ -81,7 +81,7 @@ export default async (
       const orgaPrices = (
         await Promise.all(
           payload.entries.map(async (entry) => {
-            const { orgaPriceId } = await toTurbo(entry.id);
+            const { orgaPriceId } = await toTurbo(entry.articleId);
             if (orgaPriceId !== null) return orgaPriceId === entry.priceId;
             return null;
           }),

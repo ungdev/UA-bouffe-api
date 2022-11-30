@@ -6,15 +6,16 @@ import editStatus from './editStatus';
 import hasPermission from '../../middlewares/hasPermission';
 import { OrderUpdate } from '../../types';
 import isBuck from '../../middlewares/isBuck';
+import isAuth from '../../middlewares/isAuth';
 
 export default () => {
   const router = Router();
 
-  router.get('/', list);
-  router.post('/', hasPermission('sell'), create);
+  router.get('/', isAuth(), list);
+  router.post('/', isAuth(), hasPermission('sell'), create);
   router.post('/dispatch', isBuck, dispatch);
-  router.patch('/:id/upgrade', hasPermission('pizza'), editStatus(OrderUpdate.UPGRADE));
-  router.patch('/:id/downgrade', hasPermission('pizza'), editStatus(OrderUpdate.DOWNGRADE));
+  router.patch('/:id/upgrade', isAuth(), hasPermission('pizza'), editStatus(OrderUpdate.UPGRADE));
+  router.patch('/:id/downgrade', isAuth(), hasPermission('pizza'), editStatus(OrderUpdate.DOWNGRADE));
 
   return router;
 };

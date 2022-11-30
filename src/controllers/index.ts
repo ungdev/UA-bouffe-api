@@ -12,7 +12,7 @@ const routes = () => {
 
   router.get('/', status());
   router.use('/auth', auth());
-  router.use('/orders', isAuth(), order());
+  router.use('/orders', order());
   router.use('/categories', isAuth(), category());
   router.use('/items', isAuth(), item());
   router.use('/promotions', isAuth(), promotions());
