@@ -53,6 +53,7 @@ export type OrderData = {
     amount: number;
   }[];
   place: string;
+  buckId: string;
 };
 
 export default async (
@@ -92,13 +93,14 @@ export default async (
       // Check that all items have orgaPrice (or none)
       if (orgaPrices.some((price) => price !== orgaPrices[0])) return unauthorized(res);
       [res.locals.orgaPrice] = orgaPrices;
+      res.locals.buckId = id;
 
       if (
-        Order.findOne({
+        (await Order.findOne({
           where: {
             buckId: id,
           },
-        }) != null
+        })) !== null
       )
         return notModified(res);
       return next();
@@ -108,4 +110,3 @@ export default async (
     return errorHandler(res, err);
   }
 };
-

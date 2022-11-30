@@ -14,7 +14,7 @@ import type { BuckResponse, OrderData } from '../../middlewares/isBuck';
 
 const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, OrderData>) => {
   try {
-    const { payment, orgaPrice, items, place } = res.locals;
+    const { payment, orgaPrice, items, place, buckId } = res.locals;
 
     if (items.length === 0) {
       return badRequest(res, Error.BASKET_EMPTY);
@@ -49,6 +49,7 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
             orderItems,
             status,
             orgaPrice,
+            buckId,
             transactions: payment,
           } as Order,
           {

@@ -13,7 +13,7 @@ const created = (res: Response, body?: object) => {
 
 const noContent = (res: Response) => res.status(204).end();
 
-const notModified = (res: Response) => res.status(304).send();
+const notModified = (res: Response) => res.status(304).end();
 
 const badRequest = (res: Response, type?: Error) =>
   res
