@@ -1,5 +1,5 @@
 import { Response, NextFunction, Request } from 'express';
-import { notModified, unauthorized } from '../utils/responses';
+import { notModified, success, unauthorized } from '../utils/responses';
 import errorHandler from '../utils/errorHandler';
 import { PaymentMethod } from '../types';
 import { toTurbo } from '../utils/turbobuck';
@@ -64,46 +64,44 @@ export default async (
   try {
     const { event, id, payload } = req.body;
 
-    if (
-      event === 'basketCreated' &&
-      id &&
-      payload &&
-      process.env.DEVICE_ID.split(',').includes(payload.deviceId) &&
-      payload.pointOfSaleId === process.env.SALE_POINT_ID
-    ) {
-      notifyRequestReceived(req.app.locals.io);
-      res.locals.payment = payload.payments.map((payment) => ({
-        method: payment.provider === 'pax' ? PaymentMethod.Card : PaymentMethod.Cash,
-        amount: -payment.amount,
-      }));
-      res.locals.items = await Promise.all(
-        payload.entries.map((entry) => toTurbo(entry.articleId).then((turboEntry) => turboEntry.item)),
-      );
-      res.locals.place = payload.orderIdentifier;
-      const orgaPrices = (
-        await Promise.all(
-          payload.entries.map(async (entry) => {
-            const { orgaPriceId } = await toTurbo(entry.articleId);
-            if (orgaPriceId !== null) return orgaPriceId === entry.priceId;
-            return null;
-          }),
-        )
-      ).filter((orgaPrice) => orgaPrice !== null);
-      if (orgaPrices.length < 1) orgaPrices[0] = false;
-      // Check that all items have orgaPrice (or none)
-      if (orgaPrices.some((price) => price !== orgaPrices[0])) return unauthorized(res);
-      [res.locals.orgaPrice] = orgaPrices;
-      res.locals.buckId = id;
+    if (event === 'basketCreated' && id && payload && process.env.DEVICE_ID.split(',').includes(payload.deviceId)) {
+      if (payload.pointOfSaleId === process.env.SALE_POINT_ID) {
+        notifyRequestReceived(req.app.locals.io);
+        res.locals.payment = payload.payments.map((payment) => ({
+          method: payment.provider === 'pax' ? PaymentMethod.Card : PaymentMethod.Cash,
+          amount: -payment.amount,
+        }));
+        res.locals.items = await Promise.all(
+          payload.entries.map((entry) => toTurbo(entry.articleId).then((turboEntry) => turboEntry.item)),
+        );
+        res.locals.place = payload.orderIdentifier;
+        const orgaPrices = (
+          await Promise.all(
+            payload.entries.map(async (entry) => {
+              const { orgaPriceId } = await toTurbo(entry.articleId);
+              if (orgaPriceId !== null) return orgaPriceId === entry.priceId;
+              return null;
+            }),
+          )
+        ).filter((orgaPrice) => orgaPrice !== null);
+        if (orgaPrices.length < 1) orgaPrices[0] = false;
+        // Check that all items have orgaPrice (or none)
+        if (orgaPrices.some((price) => price !== orgaPrices[0])) return unauthorized(res);
+        [res.locals.orgaPrice] = orgaPrices;
+        res.locals.buckId = id;
 
-      if (
-        (await Order.findOne({
-          where: {
-            buckId: id,
-          },
-        })) !== null
-      )
-        return notModified(res);
-      return next();
+        if (
+          (await Order.findOne({
+            where: {
+              buckId: id,
+            },
+          })) !== null
+        )
+          return notModified(res);
+        return next();
+      } else if (payload.pointOfSaleId === process.env.ENTRY_SALE_POINT_ID) {
+        return success(res, {});
+      }
     }
     return unauthorized(res);
   } catch (err) {
