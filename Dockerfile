@@ -1,23 +1,25 @@
-FROM node:16
+FROM node:18
 
 ENV NODE_ENV=production
 WORKDIR /srv/app
+
+RUN npm install -g pnpm
 
 RUN chown node:node .
 
 USER node
 
 # Node has the uid 1000
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node package.json pnpm-lock.yaml ./
 
-RUN yarn --frozen-lockfile --production=false
+RUN pnpm install --frozen-lockfile
 
 COPY --chown=node:node ./ ./
 
 # Build api
-RUN yarn build
+RUN pnpm build
 
 # Prunes devDependencies
-RUN yarn install --production --ignore-scripts --prefer-offline
+RUN pnpm install --production --ignore-scripts --prefer-offline
 
-CMD yarn start
+CMD pnpm start
