@@ -99,7 +99,7 @@ export default async (
         )
           return notModified(res);
         return next();
-      } else if (payload.pointOfSaleId === process.env.ENTRY_SALE_POINT_ID) {
+      } if (payload.pointOfSaleId === process.env.ENTRY_SALE_POINT_ID) {
         return success(res, {});
       }
     }

@@ -7,7 +7,7 @@ API du microservice [UA Bouffe](https://github.com/ungdev/UA-bouffe)
 ## Installation
 ### Prérequis
 - NodeJS
-- Yarn
+- Pnpm
 - MySQL
 ### Base de données
 Créer la base de données uabouffe
@@ -18,23 +18,23 @@ CREATE DATABASE uabouffe CHARACTER SET utf8;
 ```
 git clone https://github.com/ungdev/UA-bouffe-api
 cp .env.example .env
-yarn
-yarn seed
+pnpm
+pnpm seed
 ```
 ## Développement
 ### Démarrer l'API en développement
 ```
-yarn dev
+pnpm dev
 ```
 ### Avant de commit
 Afin de garder une certaine cohérence dans le code, on utilise EsLint et Prettier. Il faut donc bien lint le code avant de commit
 ```
-yarn lint-fix
+pnpm lint-fix
 ```
 ### Démarrer l'API en production
 ```
-yarn build
-yarn start
+pnpm build
+pnpm start
 ```
 
 ### CI/CD
