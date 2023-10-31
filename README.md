@@ -16,7 +16,7 @@ CREATE DATABASE uabouffe CHARACTER SET utf8;
 ```
 ### Installation de l'API et des dépendances
 
-Il faut maintenant clone le repo UA-bouffe (avec les submodules) qui contient un jeu de données. D'où l'inexistence de la commande `pnpm seed`.
+Il faut maintenant clone le repo [UA-bouffe](https://github.com/ungdev/UA-bouffe) (avec les submodules) qui contient un jeu de données. D'où l'inexistence de la commande `pnpm seed`.
 ```
 git clone https://github.com/ungdev/UA-bouffe-api
 cp .env.example .env
