@@ -47,6 +47,6 @@
     "start": "node build/server.js",
     "dev": "ts-node-dev --no-notify src/server.ts",
     "lint": "eslint src/ --ext .ts",
-    "lint-fix": "eslint --fix src/ --ext .ts"
+    "lint:fix": "eslint --fix src/ --ext .ts"
   }
 }
