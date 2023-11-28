@@ -70,9 +70,9 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
       }),
     );
 
-    sendSlackMessage();
+    await sendSlackMessage();
 
-    notifyOrdersUpdated(req.app.locals.io);
+    await notifyOrdersUpdated(req.app.locals.io);
 
     return created(res);
   } catch (err) {

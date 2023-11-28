@@ -122,9 +122,9 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
       }),
     );
 
-    sendSlackMessage();
+    await sendSlackMessage();
 
-    notifyOrdersUpdated(req.app.locals.io);
+    await notifyOrdersUpdated(req.app.locals.io);
 
     return created(res);
   } catch (err) {

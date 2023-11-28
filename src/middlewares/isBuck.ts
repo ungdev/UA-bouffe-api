@@ -66,7 +66,7 @@ export default async (
 
     if (event === 'basketCreated' && id && payload && process.env.DEVICE_ID.split(',').includes(payload.deviceId)) {
       if (payload.pointOfSaleId === process.env.SALE_POINT_ID) {
-        notifyRequestReceived(req.app.locals.io);
+        await notifyRequestReceived(req.app.locals.io);
         res.locals.payment = payload.payments.map((payment) => ({
           method: payment.provider === 'pax' ? PaymentMethod.Card : PaymentMethod.Cash,
           amount: -payment.amount,

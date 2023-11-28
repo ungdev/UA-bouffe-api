@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export default () => {
+export default async () => {
   if (process.env.SLACK_ENABLED === 'true') {
-    axios.request({
+    await axios.request({
       method: 'POST',
       url: process.env.SLACK_WEBHOOK_URL,
       headers: {
