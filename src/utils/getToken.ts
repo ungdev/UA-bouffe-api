@@ -7,9 +7,7 @@ const getToken = (req: Request) => {
     return null;
   }
 
-  const token = authorization.split(' ')[1];
-
-  return token;
+  return authorization.split(' ')[1];
 };
 
 export default getToken;

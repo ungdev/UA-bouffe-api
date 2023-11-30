@@ -58,5 +58,5 @@ config();
     log.info(`Listening on ${process.env.APP_PORT}...`);
   });
 
-  monitorInternetConnection(io);
+  await monitorInternetConnection(io);
 })();

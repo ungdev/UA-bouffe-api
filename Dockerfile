@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20
 
 ENV NODE_ENV=production
 WORKDIR /srv/app
@@ -12,7 +12,7 @@ USER node
 # Node has the uid 1000
 COPY --chown=node:node package.json pnpm-lock.yaml ./
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --production=false
 
 COPY --chown=node:node ./ ./
 

@@ -41,10 +41,10 @@ export const monitorInternetConnection = async (io: SocketIO.Server): Promise<vo
   }
 };
 
-export const notifyRequestReceived = (io: SocketIO.Server) => {
+export const notifyRequestReceived = async (io: SocketIO.Server) => {
   if (!isOnline) {
     isOnline = true;
-    notifyNetworkStatusChanged(io, isOnline);
+    await notifyNetworkStatusChanged(io, isOnline);
     currentTimeout.abort();
   }
 };

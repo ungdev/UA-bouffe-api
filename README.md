@@ -15,11 +15,12 @@ Créer la base de données uabouffe
 CREATE DATABASE uabouffe CHARACTER SET utf8;
 ```
 ### Installation de l'API et des dépendances
+
+Il faut maintenant clone le repo [UA-bouffe](https://github.com/ungdev/UA-bouffe) (avec les submodules) qui contient un jeu de données à mettre dans la DB.
 ```
 git clone https://github.com/ungdev/UA-bouffe-api
 cp .env.example .env
-pnpm
-pnpm seed
+pnpm i
 ```
 ## Développement
 ### Démarrer l'API en développement

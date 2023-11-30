@@ -19,7 +19,7 @@ export default async (req: Request, res: Response) => {
 
     await item.save();
 
-    notifyItemsUpdated(req.app.locals.io);
+    await notifyItemsUpdated(req.app.locals.io);
 
     return noContent(res);
   } catch (err) {

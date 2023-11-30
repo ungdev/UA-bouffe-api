@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
-import { noContent, notFound, badRequest, unauthorized } from '../../utils/responses';
+import { badRequest, noContent, notFound, unauthorized } from '../../utils/responses';
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
-import { Status, Permission, Error, OrderUpdate } from '../../types';
+import { Error, OrderUpdate, Permission, Status } from '../../types';
 import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
@@ -67,7 +67,7 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
         await OrderItem.destroy({ where: { orderId: order.id } });
         await order.destroy();
 
-        notifyOrdersUpdated(req.app.locals.io);
+        await notifyOrdersUpdated(req.app.locals.io);
         return noContent(res);
       }
 
@@ -82,14 +82,13 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
       }
     }
 
-    const newStatus = statusOrdered[statusOrdered.indexOf(order.status) + orderUpdate];
-    order.status = newStatus;
+    order.status = statusOrdered[statusOrdered.indexOf(order.status) + orderUpdate];
 
     await order.save();
 
-    sendOrderToDiscordApi(order);
+    await sendOrderToDiscordApi(order);
 
-    notifyOrdersUpdated(req.app.locals.io);
+    await notifyOrdersUpdated(req.app.locals.io);
 
     return noContent(res);
   } catch (err) {
