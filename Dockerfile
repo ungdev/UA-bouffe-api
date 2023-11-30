@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile --production=false
 COPY --chown=node:node ./ ./
 
 # Build api
-RUN pnpm build --build-arg API_URI=http://x.x.x.x:port # Replace with your IP and port
+RUN pnpm build
 
 # Prunes devDependencies
 RUN pnpm install --production --ignore-scripts --prefer-offline
