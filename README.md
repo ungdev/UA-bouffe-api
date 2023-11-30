@@ -38,6 +38,8 @@ pnpm build
 pnpm start
 ```
 
+Dans le Dockerfile, il faut aussi rajouter l'argument `--build-arg API_URI=http://x.x.x.x:port` à la commande `pnpm build`, en mettant l'IP et le port de l'API.
+
 ### CI/CD
 La pipeline de CI/CD est assurée par GitHub Actions.
 
