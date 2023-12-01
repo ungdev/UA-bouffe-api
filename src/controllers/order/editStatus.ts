@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
 import axios from 'axios';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
-import { badRequest, noContent, notFound, unauthorized } from '../../utils/responses';
+import {badRequest, noContent, notFound, unauthorized} from '../../utils/responses';
 import Order from '../../models/order';
 import errorHandler from '../../utils/errorHandler';
-import { Error, OrderUpdate, Permission, Status } from '../../types';
+import {Error, OrderUpdate, Permission, Status} from '../../types';
 import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
@@ -16,16 +16,21 @@ const sendOrderToDiscordApi = async (order: Order) => {
   log.info(order);
 
   try {
-    await axios.post(
-      `https://bouffe-discord.ua.uttnetgroup.fr/sendMessageToDiscord`,
-      {
-        order,
-      },
+    const discordId: string = 'ENTER DISCORD ID STRING HERE';
+    const res = await axios.post(
+      `https://discord.com/api/users/@me/channels`,
+      { recipient_id: discordId },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bot ${token}`,
         },
       },
+    );
+    const { id: dmId }: { id: string } = res.data;
+    await axios.post(
+      `https://discord.com/api/channels/${dmId}/messages`,
+      { content: "Ta commande est prête, viens la chercher !" },
+      { headers: { Authorization: `Bot ${token}` } }
     );
     log.info('SENT !');
   } catch (error) {
@@ -86,7 +91,11 @@ const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Respo
 
     await order.save();
 
-    await sendOrderToDiscordApi(order);
+    if (order.status === Status.READY
+      && orderUpdate === OrderUpdate.UPGRADE
+      && order.orderItems.some((item) => item.item.category.needsPreparation)) {
+      await sendOrderToDiscordApi(order);
+    }
 
     await notifyOrdersUpdated(req.app.locals.io);
 
