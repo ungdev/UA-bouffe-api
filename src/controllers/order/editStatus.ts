@@ -17,7 +17,7 @@ const sendOrderToDiscordApi = async (order: Order) => {
   log.info(order);
 
   try {
-    const discordId: string | undefined = (await PlaceAndDiscord.findByPk(order.place))?.discordId;
+    const discordId: string | null = (await PlaceAndDiscord.findByPk(order.place))?.discordId;
     if (!discordId) {
       return;
     }
@@ -30,7 +30,6 @@ const sendOrderToDiscordApi = async (order: Order) => {
         },
       },
     );
-    console.log(res.data);
     const { id: dmId }: { id: string } = res.data;
     await axios.post(
       `https://discord.com/api/channels/${dmId}/messages`,
