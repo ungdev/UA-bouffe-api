@@ -9,6 +9,7 @@ import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
 import log from '../../utils/log';
+import PlaceAndDiscord from "../../models/placeAndDiscord";
 
 const sendOrderToDiscordApi = async (order: Order) => {
   const token = process.env.DISCORD_API_PRIVATE_KEY;
@@ -16,7 +17,10 @@ const sendOrderToDiscordApi = async (order: Order) => {
   log.info(order);
 
   try {
-    const discordId: string = 'ENTER DISCORD ID STRING HERE';
+    const discordId: string | undefined = (await PlaceAndDiscord.findByPk(order.place))?.discordId;
+    if (!discordId) {
+      return;
+    }
     const res = await axios.post(
       `https://discord.com/api/users/@me/channels`,
       { recipient_id: discordId },
@@ -26,6 +30,7 @@ const sendOrderToDiscordApi = async (order: Order) => {
         },
       },
     );
+    console.log(res.data);
     const { id: dmId }: { id: string } = res.data;
     await axios.post(
       `https://discord.com/api/channels/${dmId}/messages`,
