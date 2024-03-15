@@ -22,6 +22,7 @@ export enum Permission {
   ADMIN = 'admin',
   SELLER = 'seller',
   PIZZA = 'pizza',
+  PREPARATOR = 'preparator'
 }
 
 export interface Token {
