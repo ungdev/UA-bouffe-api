@@ -20,11 +20,9 @@ export default (permissions: Array<string>) => async (req: Request, res: Respons
       if (decoded.permissions === Permission.ADMIN) {
         return next();
       }
-      for (const permission of permissions) {
-        if (decoded.permissions === permission) {
-          return next();
-        }
-      }
+
+      const hasPermission: boolean = permissions.some((perm) => perm === decoded.permissions)
+      if (hasPermission) return next();
       return unauthorized(res);
     }
 
