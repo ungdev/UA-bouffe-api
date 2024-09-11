@@ -22,7 +22,7 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
 
     const separatedItems = items.reduce(
       (acc, item) => {
-        acc[Number(item.category.key === 'pizzas')].push(item);
+        acc[Number(item.category.needsPreparation === false)].push(item);
         return acc;
       },
       [[], []] as [Partial<Item>[], Partial<Item>[]],

@@ -56,7 +56,7 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
       })
       .reduce(
         (acc, item) => {
-          if (item.item.category.key !== 'pizzas') {
+          if (item.item.category.needsPreparation) {
             acc[0].push(item);
           } else {
             acc[1].push(item);
