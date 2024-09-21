@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import axios from 'axios';
 import notifyOrdersUpdated from '../../sockets/notifyOrdersUpdated';
 import {badRequest, noContent, notFound, unauthorized} from '../../utils/responses';
 import Order from '../../models/order';
@@ -8,39 +7,7 @@ import {Error, OrderUpdate, Permission, Status} from '../../types';
 import OrderItem from '../../models/orderItem';
 import Item from '../../models/item';
 import Category from '../../models/category';
-import log from '../../utils/log';
-import PlaceAndDiscord from "../../models/placeAndDiscord";
-
-const sendOrderToDiscordApi = async (order: Order) => {
-  const token = process.env.DISCORD_API_PRIVATE_KEY;
-  log.info('Sending order to discord...');
-  log.info(order);
-
-  try {
-    const discordId: string | null = (await PlaceAndDiscord.findByPk(order.place))?.discordId;
-    if (!discordId) {
-      return;
-    }
-    const res = await axios.post(
-      `https://discord.com/api/users/@me/channels`,
-      { recipient_id: discordId },
-      {
-        headers: {
-          Authorization: `Bot ${token}`,
-        },
-      },
-    );
-    const { id: dmId }: { id: string } = res.data;
-    await axios.post(
-      `https://discord.com/api/channels/${dmId}/messages`,
-      { content: "Ta commande est prête, viens la chercher !" },
-      { headers: { Authorization: `Bot ${token}` } }
-    );
-    log.info('SENT !');
-  } catch (error) {
-    log.warn('Error while sending message to bouffe-discord', error);
-  }
-};
+import sendOrderToDiscordApi from '../../utils/sendDiscordMessage';
 
 const editStatus = (orderUpdate: OrderUpdate) => async (req: Request, res: Response) => {
   try {

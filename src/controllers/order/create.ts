@@ -8,7 +8,6 @@ import { BodyRequest, PaymentMethod, Error, Status } from '../../types';
 import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
 import Category from '../../models/category';
-import sendSlackMessage from '../../utils/sendSlackMessage';
 import Supplement from '../../models/supplement';
 import OrderSupplement from '../../models/orderSupplement';
 import Transaction from '../../models/transaction';
@@ -121,8 +120,6 @@ const create = async (req: BodyRequest<Body>, res: Response) => {
         );
       }),
     );
-
-    await sendSlackMessage();
 
     await notifyOrdersUpdated(req.app.locals.io);
 
