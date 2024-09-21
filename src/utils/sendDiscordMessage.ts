@@ -1,15 +1,15 @@
 import axios from 'axios';
 import Order from '../models/order';
-import log from '../utils/log';
+import log from './log';
 import PlaceAndDiscord from "../models/placeAndDiscord";
 
 const sendOrderToDiscordApi = async (order: Order) => {
     const token = process.env.DISCORD_API_PRIVATE_KEY;
     log.info('Sending order to discord...');
 
-    const items = '- ' + order.orderItems
+    const items = `- ${  order.orderItems
         .map(orderItem => orderItem.item.name)
-        .join('\n- ');
+        .join('\n- ')}`;
 
     try {
         const discordId: string | null = (await PlaceAndDiscord.findByPk(order.place))?.discordId;
@@ -31,7 +31,7 @@ const sendOrderToDiscordApi = async (order: Order) => {
         const content = `Ta commande est prête, viens la chercher !\n\nDétail de la commande :\n${items}\n\nNuméro de commande : **${order.place}**`;
         await axios.post(
             `https://discord.com/api/channels/${dmId}/messages`,
-            { content:  content},
+            { content },
             { headers: { Authorization: `Bot ${token}` } }
         );
         log.info(`Discord message sent to : ${discordId}`);
