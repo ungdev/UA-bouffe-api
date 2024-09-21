@@ -6,7 +6,6 @@ import OrderItem from '../../models/orderItem';
 import { BodyRequest, Error, Status } from '../../types';
 import Item from '../../models/item';
 import errorHandler from '../../utils/errorHandler';
-import sendSlackMessage from '../../utils/sendSlackMessage';
 import Supplement from '../../models/supplement';
 import OrderSupplement from '../../models/orderSupplement';
 import Transaction from '../../models/transaction';
@@ -69,8 +68,6 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
         );
       }),
     );
-
-    await sendSlackMessage();
 
     await notifyOrdersUpdated(req.app.locals.io);
 
