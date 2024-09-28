@@ -28,6 +28,10 @@ export default class Supplement extends Model<Supplement> implements Price {
   @Column
   public available: boolean;
 
+  @AllowNull(false)
+  @Column
+  public quantity: number;
+
   @BelongsToMany(() => Item, {
     through: 'itemsupplements',
     foreignKey: 'supplementKey',
@@ -37,3 +41,4 @@ export default class Supplement extends Model<Supplement> implements Price {
   })
   public applicableOn: Item[];
 }
+

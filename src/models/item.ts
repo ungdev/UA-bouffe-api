@@ -37,6 +37,10 @@ export default class Item extends Model<Item> implements Price {
   @Column
   public categoryId: number;
 
+  @AllowNull(false)
+  @Column
+  public quantity: number;
+
   @BelongsTo(() => Category)
   public category: Category;
 
@@ -49,3 +53,4 @@ export default class Item extends Model<Item> implements Price {
   })
   public supplements: Supplement[];
 }
+
