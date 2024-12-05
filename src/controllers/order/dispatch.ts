@@ -39,7 +39,7 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
             ({
               itemId: entry.id,
               supplements: [],
-            } as OrderItem),
+            }) as OrderItem,
         );
 
         return Order.create(
@@ -78,3 +78,4 @@ const dispatch = async (req: BodyRequest<BuckResponse>, res: Response<unknown, O
 };
 
 export default dispatch;
+
